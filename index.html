@@ -1,0 +1,3509 @@
+<!DOCTYPE html>
+<!-- 
+苏心养老数字人民币服务平台 - 独立版H5
+版本：V2.0
+日期：2026-08-08
+编制：国金数联科技
+省级养老金融基础设施H5前端
+覆盖 160万失能老人 + 1900万活力老人 · 13市覆盖
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EA580C">
+<meta name="description" content="苏心养老·安享无忧 - 江苏省官方养老数字人民币服务平台">
+<title>苏心养老·安享无忧 - 数字人民币养老服务平台</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23EA580C'/><text x='50' y='68' font-size='60' font-weight='800' text-anchor='middle' fill='white' font-family='sans-serif'>苏</text></svg>">
+<style>
+/* ============ 基础重置 ============ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;font-size:14px;color:#111827;background:#F9FAFB;-webkit-font-smoothing:antialiased;line-height:1.5;}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;}
+input,select,textarea{font-family:inherit;font-size:14px;color:#111827;}
+a{color:inherit;text-decoration:none;}
+ul,ol{list-style:none;}
+img{display:block;max-width:100%;}
+
+/* ============ 变量 ============ */
+:root{
+  --primary:#EA580C;
+  --primary-light:#F59E0B;
+  --primary-grad:linear-gradient(135deg,#EA580C 0%,#F59E0B 100%);
+  --primary-soft:linear-gradient(135deg,#FED7AA 0%,#FEF3C7 100%);
+  --danger:#EF4444;
+  --success:#10B981;
+  --warning:#F59E0B;
+  --info:#3B82F6;
+  --purple:#8B5CF6;
+  --cyan:#06B6D4;
+  --pink:#EC4899;
+  --gold:#D97706;
+  --text:#111827;
+  --text-2:#4B5563;
+  --text-3:#6B7280;
+  --text-4:#9CA3AF;
+  --bg:#F9FAFB;
+  --bg-2:#F3F4F6;
+  --border:#E5E7EB;
+  --white:#FFFFFF;
+  --shadow:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.12);
+  --radius:16px;
+  --radius-sm:12px;
+  --radius-lg:24px;
+}
+
+/* ============ App骨架 ============ */
+.app{position:fixed;inset:0;max-width:480px;margin:0 auto;background:var(--bg);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 30px rgba(0,0,0,.15);}
+.pages{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;}
+.pages::-webkit-scrollbar{display:none;}
+
+/* ============ 顶部状态栏 ============ */
+.status-bar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:15px;font-weight:600;color:#111827;background:transparent;position:sticky;top:0;z-index:100;}
+.status-bar .right{display:flex;align-items:center;gap:5px;}
+.status-bar .battery{width:24px;height:12px;border:1.5px solid #111;border-radius:3px;position:relative;padding:1px;}
+.status-bar .battery::before{content:"";position:absolute;right:-3px;top:3px;width:2px;height:4px;background:#111;border-radius:0 1px 1px 0;}
+.status-bar .battery i{display:block;height:100%;width:80%;background:#10B981;border-radius:1px;}
+
+/* ============ 顶部导航 ============ */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px;background:var(--white);position:sticky;top:44px;z-index:99;}
+.topbar.with-bg{background:transparent;position:relative;top:0;}
+.topbar.color{color:#fff;}
+.brand{display:flex;align-items:center;gap:8px;}
+.brand-logo{width:32px;height:32px;border-radius:9px;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;box-shadow:0 2px 8px rgba(234,88,12,.35);}
+.brand-name{font-size:17px;font-weight:700;color:#111827;letter-spacing:.5px;}
+.brand-name small{display:block;font-size:10px;color:#9CA3AF;font-weight:400;letter-spacing:0;}
+.topbar-actions{display:flex;align-items:center;gap:14px;}
+.icon-btn{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;color:#4B5563;}
+.icon-btn .dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--danger);border:2px solid #fff;}
+
+/* ============ Hero 区 ============ */
+.hero{background:var(--primary-grad);padding:8px 16px 32px;color:#fff;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);}
+.hero::after{content:"";position:absolute;bottom:-80px;left:-30px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.06);}
+.hero > *{position:relative;z-index:1;}
+.hero-title{font-size:24px;font-weight:800;letter-spacing:.5px;margin-bottom:6px;}
+.hero-sub{font-size:12px;opacity:.92;line-height:1.6;margin-bottom:18px;}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:18px;}
+.hero-stat{background:rgba(255,255,255,.18);border-radius:10px;padding:8px 4px;text-align:center;backdrop-filter:blur(10px);}
+.hero-stat .n{font-size:16px;font-weight:800;}
+.hero-stat .l{font-size:10px;opacity:.85;margin-top:2px;}
+.hero-cta{display:flex;gap:10px;}
+.btn-hero{flex:1;height:44px;border-radius:22px;background:#fff;color:var(--primary);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.btn-hero.outline{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:none;}
+
+/* ============ 区块 ============ */
+.section{padding:18px 16px;}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.section-title h3{font-size:17px;font-weight:700;color:#111827;display:flex;align-items:center;gap:8px;}
+.section-title h3::before{content:"";width:4px;height:18px;border-radius:2px;background:var(--primary-grad);}
+.section-title .more{font-size:12px;color:#9CA3AF;}
+
+/* ============ 用户状态卡 ============ */
+.user-card{background:var(--white);margin:-40px 16px 0;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-lg);position:relative;z-index:5;}
+.user-card-row{display:flex;align-items:center;gap:12px;}
+.avatar{width:48px;height:48px;border-radius:50%;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:700;flex-shrink:0;}
+.avatar.lg{width:60px;height:60px;font-size:24px;}
+.user-info{flex:1;min-width:0;}
+.user-info .name{font-size:16px;font-weight:700;color:#111827;display:flex;align-items:center;gap:6px;}
+.user-info .name .vip{font-size:9px;background:linear-gradient(135deg,#F59E0B,#EA580C);color:#fff;padding:1px 5px;border-radius:4px;font-weight:600;}
+.user-info .meta{font-size:11px;color:#9CA3AF;margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.user-info .meta .tag{background:#FEE2E2;color:#DC2626;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600;}
+.user-info .meta .tag.ok{background:#D1FAE5;color:#059669;}
+.user-info .meta .tag.gold{background:#FEF3C7;color:#D97706;}
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);}
+.quick-action{display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 0;font-size:11px;color:#4B5563;}
+.quick-action .qa-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;}
+.quick-action .qa-ico.o{background:linear-gradient(135deg,#EA580C,#F59E0B);}
+
+/* ============ 5大产品矩阵 ============ */
+.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.matrix-item{background:var(--white);border-radius:var(--radius);padding:14px 8px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.matrix-item::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;}
+.matrix-item.m1::before{background:linear-gradient(90deg,#EA580C,#F59E0B);}
+.matrix-item.m2::before{background:linear-gradient(90deg,#3B82F6,#60A5FA);}
+.matrix-item.m3::before{background:linear-gradient(90deg,#D97706,#F59E0B);}
+.matrix-item.m4::before{background:linear-gradient(90deg,#8B5CF6,#A78BFA);}
+.matrix-item.m5::before{background:linear-gradient(90deg,#06B6D4,#22D3EE);}
+.matrix-item.m6::before{background:linear-gradient(90deg,#EC4899,#F472B6);}
+.matrix-item .mi-ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;margin:0 auto 6px;}
+.matrix-item.m1 .mi-ico{background:linear-gradient(135deg,#EA580C,#F59E0B);}
+.matrix-item.m2 .mi-ico{background:linear-gradient(135deg,#3B82F6,#60A5FA);}
+.matrix-item.m3 .mi-ico{background:linear-gradient(135deg,#D97706,#F59E0B);}
+.matrix-item.m4 .mi-ico{background:linear-gradient(135deg,#8B5CF6,#A78BFA);}
+.matrix-item.m5 .mi-ico{background:linear-gradient(135deg,#06B6D4,#22D3EE);}
+.matrix-item.m6 .mi-ico{background:linear-gradient(135deg,#EC4899,#F472B6);}
+.matrix-item .mi-name{font-size:13px;font-weight:700;color:#111827;}
+.matrix-item .mi-sub{font-size:10px;color:#9CA3AF;margin-top:2px;}
+.matrix-item .mi-tag{position:absolute;top:8px;right:6px;font-size:9px;padding:1px 4px;border-radius:3px;font-weight:600;}
+.matrix-item .mi-tag.new{background:#FEE2E2;color:#DC2626;}
+.matrix-item .mi-tag.hot{background:#FEF3C7;color:#D97706;}
+.matrix-item .mi-tag.dot{background:#DCFCE7;color:#16A34A;}
+
+/* ============ 业务场景卡片（横向） ============ */
+.scenes{display:flex;gap:12px;overflow-x:auto;padding:0 16px 6px;-webkit-overflow-scrolling:touch;}
+.scenes::-webkit-scrollbar{display:none;}
+.scene-card{flex-shrink:0;width:140px;border-radius:var(--radius);padding:14px;color:#fff;position:relative;overflow:hidden;cursor:pointer;}
+.scene-card::after{content:"";position:absolute;right:-20px;bottom:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.15);}
+.scene-card .sc-ico{font-size:24px;margin-bottom:10px;position:relative;z-index:1;}
+.scene-card .sc-t{font-size:14px;font-weight:700;margin-bottom:3px;position:relative;z-index:1;}
+.scene-card .sc-s{font-size:10px;opacity:.88;position:relative;z-index:1;}
+.scene-card.c1{background:linear-gradient(135deg,#EA580C,#FB923C);}
+.scene-card.c2{background:linear-gradient(135deg,#0EA5E9,#38BDF8);}
+.scene-card.c3{background:linear-gradient(135deg,#10B981,#34D399);}
+.scene-card.c4{background:linear-gradient(135deg,#8B5CF6,#A78BFA);}
+.scene-card.c5{background:linear-gradient(135deg,#EF4444,#F87171);}
+
+/* ============ 钱包双轨 ============ */
+.wallet-dual{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.wallet-dual .wd-card{background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);}
+.wallet-dual .wd-card .wd-t{font-size:13px;color:#4B5563;font-weight:600;display:flex;align-items:center;gap:6px;}
+.wallet-dual .wd-card .wd-b{font-size:20px;font-weight:800;color:#111827;margin-top:8px;}
+.wallet-dual .wd-card .wd-s{font-size:11px;color:#9CA3AF;margin-top:4px;}
+
+/* ============ 数据看板 ============ */
+.dashboard{background:linear-gradient(135deg,rgba(254,243,199,.5),rgba(254,215,170,.5));border:1px solid #FED7AA;border-radius:var(--radius);padding:16px;margin:0 16px 18px;box-shadow:var(--shadow);}
+.dash-title{font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.dash-title small{font-size:10px;color:#9CA3AF;font-weight:400;}
+.dash-title .refresh{font-size:11px;color:var(--primary);display:flex;align-items:center;gap:3px;}
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.dash-cell{background:rgba(255,255,255,.7);border-radius:12px;padding:12px;backdrop-filter:blur(10px);}
+.dash-cell .v{font-size:18px;font-weight:800;color:#EA580C;}
+.dash-cell .l{font-size:11px;color:#6B7280;margin-top:2px;}
+.dash-cell .trend{font-size:10px;color:var(--success);font-weight:600;margin-top:4px;}
+.dash-cell.b{background:rgba(219,234,254,.7);}
+.dash-cell.b .v{color:#2563EB;}
+.dash-cell.g{background:rgba(209,250,229,.7);}
+.dash-cell.g .v{color:#059669;}
+.dash-cell.p{background:rgba(237,233,254,.7);}
+.dash-cell.p .v{color:#7C3AED;}
+
+/* ============ 公告 ============ */
+.notice{display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#FFF7ED,#FEF3C7);margin:0 16px 18px;padding:10px 14px;border-radius:12px;border:1px solid #FED7AA;}
+.notice-tag{font-size:10px;background:var(--primary);color:#fff;padding:2px 6px;border-radius:4px;font-weight:600;flex-shrink:0;}
+.notice-text{flex:1;font-size:12px;color:#4B5563;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+
+/* ============ 活动专区 ============ */
+.activity{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 18px;}
+.act-card{border-radius:14px;padding:14px;color:#fff;position:relative;overflow:hidden;height:90px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;}
+.act-card::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.15);}
+.act-card .at-t{font-size:13px;font-weight:700;position:relative;z-index:1;}
+.act-card .at-s{font-size:10px;opacity:.88;position:relative;z-index:1;}
+.act-card .at-ico{font-size:30px;position:absolute;right:10px;bottom:10px;z-index:1;opacity:.4;}
+.act-card.a1{background:linear-gradient(135deg,#F472B6,#EC4899);}
+.act-card.a2{background:linear-gradient(135deg,#06B6D4,#0EA5E9);}
+
+/* ============ 底部Tab ============ */
+.tabbar{height:64px;background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom);flex-shrink:0;}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;padding:8px 0;font-size:10px;color:#9CA3AF;}
+.tab .t-ico{font-size:22px;line-height:1;}
+.tab.active{color:var(--primary);}
+.tab.active .t-ico{font-weight:700;}
+
+/* ============ 通用页面 ============ */
+.page{display:none;min-height:100%;}
+.page.active{display:block;}
+
+/* ============ 消费券页面 ============ */
+.coupon-hero{background:linear-gradient(135deg,#EA580C 0%,#F59E0B 100%);padding:14px 16px 60px;color:#fff;position:relative;}
+.coupon-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:30px;background:#F9FAFB;border-radius:18px 18px 0 0;}
+.coupon-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;}
+.cs-cell{background:rgba(255,255,255,.18);border-radius:12px;padding:10px;text-align:center;backdrop-filter:blur(10px);}
+.cs-cell .v{font-size:18px;font-weight:800;}
+.cs-cell .l{font-size:10px;opacity:.85;margin-top:2px;}
+
+.coupon-tabs{display:flex;background:#fff;margin:-30px 16px 14px;border-radius:14px;padding:4px;box-shadow:var(--shadow);position:relative;z-index:2;}
+.coupon-tabs .ct{flex:1;text-align:center;padding:8px;font-size:13px;color:#6B7280;border-radius:10px;font-weight:600;}
+.coupon-tabs .ct.active{background:var(--primary-grad);color:#fff;}
+
+.coupon-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);display:flex;gap:12px;position:relative;overflow:hidden;}
+.coupon-card::before{content:"";position:absolute;left:96px;top:0;bottom:0;width:1px;border-left:2px dashed #E5E7EB;}
+.coupon-card .cc-left{width:84px;flex-shrink:0;text-align:center;}
+.coupon-card .cc-amount{font-size:28px;font-weight:800;color:var(--primary);line-height:1;}
+.coupon-card .cc-amount small{font-size:14px;}
+.coupon-card .cc-type{font-size:11px;color:#9CA3AF;margin-top:3px;}
+.coupon-card .cc-right{flex:1;min-width:0;}
+.coupon-card .cc-title{font-size:14px;font-weight:700;color:#111827;}
+.coupon-card .cc-meta{font-size:11px;color:#6B7280;margin-top:4px;line-height:1.5;}
+.coupon-card .cc-progress{margin-top:8px;}
+.coupon-card .cc-progress .bar{height:6px;background:#F3F4F6;border-radius:3px;overflow:hidden;}
+.coupon-card .cc-progress .fill{height:100%;background:linear-gradient(90deg,#EA580C,#F59E0B);border-radius:3px;}
+.coupon-card .cc-progress .info{display:flex;justify-content:space-between;font-size:10px;color:#9CA3AF;margin-top:4px;}
+.coupon-card .cc-badge{position:absolute;top:8px;right:8px;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:600;}
+.cc-badge.ok{background:#D1FAE5;color:#059669;}
+.cc-badge.ing{background:#FEF3C7;color:#D97706;}
+.cc-badge.gray{background:#F3F4F6;color:#6B7280;}
+
+/* ============ 钱包页面 ============ */
+.wallet-hero{background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 100%);padding:14px 16px 30px;color:#fff;position:relative;}
+.wallet-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:30px;background:#F9FAFB;border-radius:18px 18px 0 0;}
+.wallet-hero::before{content:"";position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08);}
+.wallet-card{display:flex;justify-content:space-between;align-items:flex-end;margin-top:10px;}
+.wallet-card .bl{font-size:12px;opacity:.85;}
+.wallet-card .br{font-size:18px;font-weight:800;}
+.wallet-balance{font-size:36px;font-weight:800;margin-top:6px;letter-spacing:.5px;}
+.wallet-balance small{font-size:16px;font-weight:600;}
+.wallet-status{display:flex;gap:14px;margin-top:14px;font-size:11px;opacity:.92;flex-wrap:wrap;}
+.wallet-status .ws{display:flex;align-items:center;gap:4px;}
+.wallet-status .dot{width:6px;height:6px;border-radius:50%;background:#34D399;}
+.wallet-status .dot.y{background:#FBBF24;}
+
+.wallet-tabs{display:flex;background:#fff;margin:-12px 16px 14px;border-radius:14px;padding:4px;box-shadow:var(--shadow);position:relative;z-index:2;}
+.wallet-tabs .wt{flex:1;text-align:center;padding:8px;font-size:12px;color:#6B7280;border-radius:10px;font-weight:600;}
+.wallet-tabs .wt.active{background:linear-gradient(135deg,#1E3A8A,#3B82F6);color:#fff;}
+
+.wallet-card-2{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.wallet-card-2 .wc-row{display:flex;align-items:center;gap:10px;padding:8px 0;}
+.wallet-card-2 .wc-row+.wc-row{border-top:1px dashed #E5E7EB;}
+.wallet-card-2 .wc-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0;}
+.wallet-card-2 .wc-text{flex:1;min-width:0;}
+.wallet-card-2 .wc-text .t{font-size:13px;font-weight:600;color:#111827;}
+.wallet-card-2 .wc-text .s{font-size:11px;color:#9CA3AF;}
+.wallet-card-2 .wc-amt{font-size:14px;font-weight:700;}
+.wallet-card-2 .wc-amt.up{color:var(--success);}
+.wallet-card-2 .wc-amt.down{color:#111827;}
+
+/* 钱包快捷功能 */
+.wallet-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 16px 14px;}
+.wallet-quick .wq{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;background:#fff;border-radius:14px;box-shadow:var(--shadow);cursor:pointer;}
+.wallet-quick .wq .wi{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;}
+.wallet-quick .wq .wt{font-size:11px;color:#4B5563;font-weight:600;}
+
+/* ============ 理财页面 ============ */
+.wealth-hero{background:linear-gradient(135deg,#D97706 0%,#F59E0B 100%);padding:14px 16px 60px;color:#fff;position:relative;}
+.wealth-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:30px;background:#F9FAFB;border-radius:18px 18px 0 0;}
+.wealth-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+.wealth-sum-cell{background:rgba(255,255,255,.18);border-radius:12px;padding:12px;}
+.wealth-sum-cell .v{font-size:22px;font-weight:800;}
+.wealth-sum-cell .v small{font-size:13px;font-weight:600;}
+.wealth-sum-cell .l{font-size:11px;opacity:.85;margin-top:2px;}
+
+.wealth-tabs{display:flex;background:#fff;margin:-30px 16px 14px;border-radius:14px;padding:4px;box-shadow:var(--shadow);position:relative;z-index:2;}
+.wealth-tabs .wt{flex:1;text-align:center;padding:8px;font-size:13px;color:#6B7280;border-radius:10px;font-weight:600;}
+.wealth-tabs .wt.active{background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;}
+
+.product-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.product-card .pc-head{display:flex;justify-content:space-between;align-items:flex-start;}
+.product-card .pc-name{font-size:15px;font-weight:700;color:#111827;}
+.product-card .pc-tag{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;background:#FEE2E2;color:#DC2626;}
+.product-card .pc-tag.safe{background:#D1FAE5;color:#059669;}
+.product-card .pc-rate{font-size:30px;font-weight:800;color:var(--primary);margin-top:10px;line-height:1;}
+.product-card .pc-rate small{font-size:14px;font-weight:500;}
+.product-card .pc-rate sup{font-size:11px;font-weight:600;}
+.product-card .pc-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px dashed #E5E7EB;}
+.product-card .pc-meta .pm{text-align:center;}
+.product-card .pc-meta .pm .v{font-size:13px;font-weight:700;color:#111827;}
+.product-card .pc-meta .pm .l{font-size:10px;color:#9CA3AF;margin-top:2px;}
+.product-card .pc-foot{display:flex;gap:8px;margin-top:12px;}
+.product-card .pc-foot .btn{flex:1;height:38px;border-radius:19px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.product-card .pc-foot .btn.pri{background:var(--primary-grad);color:#fff;}
+.product-card .pc-foot .btn.ghost{background:#FED7AA;color:var(--primary);}
+
+/* ============ 服务市场 ============ */
+.market-tabs{display:flex;background:#fff;margin:14px 16px 14px;border-radius:14px;padding:4px;box-shadow:var(--shadow);}
+.market-tabs .mt{flex:1;text-align:center;padding:9px 6px;font-size:12px;color:#6B7280;border-radius:10px;font-weight:600;}
+.market-tabs .mt.active{background:linear-gradient(135deg,#EA580C,#F59E0B);color:#fff;}
+
+.market-filters{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;}
+.market-filters::-webkit-scrollbar{display:none;}
+.market-filters .mf{flex-shrink:0;padding:6px 12px;border-radius:18px;background:#fff;font-size:12px;color:#4B5563;font-weight:600;}
+.market-filters .mf.on{background:var(--primary-grad);color:#fff;}
+
+.provider-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.provider-card .pc-top{display:flex;gap:12px;align-items:center;}
+.provider-card .pc-logo{width:46px;height:46px;border-radius:10px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.provider-card .pc-info{flex:1;min-width:0;}
+.provider-card .pc-title{font-size:14px;font-weight:700;color:#111827;display:flex;align-items:center;gap:6px;}
+.provider-card .pc-title .v{font-size:9px;padding:1px 5px;border-radius:4px;font-weight:600;background:var(--primary-grad);color:#fff;}
+.provider-card .pc-meta{font-size:11px;color:#6B7280;margin-top:4px;display:flex;gap:8px;align-items:center;}
+.provider-card .pc-meta .star{color:#F59E0B;font-weight:700;}
+.provider-card .pc-meta .sign{font-size:10px;color:var(--success);font-weight:600;}
+.provider-card .pc-meta .sign.no{color:var(--danger);}
+.provider-card .pc-price{text-align:right;flex-shrink:0;}
+.provider-card .pc-price .p{font-size:16px;font-weight:800;color:var(--primary);}
+.provider-card .pc-price .u{font-size:10px;color:#9CA3AF;}
+.provider-card .pc-srv{padding-top:10px;margin-top:10px;border-top:1px dashed #E5E7EB;font-size:11px;color:#6B7280;}
+.provider-card .pc-srv .ps-item{display:flex;justify-content:space-between;padding:4px 0;}
+.provider-card .pc-srv .ps-item .pn{color:#111827;font-weight:600;}
+.provider-card .pc-foot{display:flex;gap:8px;margin-top:10px;}
+.provider-card .pc-foot .btn{flex:1;height:36px;border-radius:18px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.provider-card .pc-foot .btn.out{background:transparent;color:var(--primary);border:1px solid var(--primary);}
+.provider-card .pc-foot .btn.pri{background:var(--primary-grad);color:#fff;}
+
+/* ============ 订单页面 ============ */
+.order-tabs{display:flex;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+.order-tabs .ot{flex:1;text-align:center;padding:12px 8px;font-size:13px;color:#6B7280;font-weight:600;position:relative;}
+.order-tabs .ot.active{color:var(--primary);}
+.order-tabs .ot.active::after{content:"";position:absolute;bottom:0;left:30%;right:30%;height:2px;background:var(--primary);border-radius:1px;}
+
+.order-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.order-card .oc-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px dashed #E5E7EB;}
+.order-card .oc-top .pname{font-size:13px;font-weight:600;color:#111827;}
+.order-card .oc-top .pname .badge{font-size:10px;background:#FEE2E2;color:#DC2626;padding:1px 5px;border-radius:3px;font-weight:600;margin-left:6px;}
+.order-card .oc-top .status{font-size:11px;font-weight:600;}
+.order-card .oc-top .status.go{color:var(--primary);}
+.order-card .oc-top .status.ok{color:var(--success);}
+.order-card .oc-top .status.do{color:#6B7280;}
+.order-card .oc-mid{display:flex;gap:10px;padding:10px 0;}
+.order-card .oc-img{width:50px;height:50px;border-radius:10px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.order-card .oc-info{flex:1;}
+.order-card .oc-info .t{font-size:13px;font-weight:600;color:#111827;}
+.order-card .oc-info .s{font-size:11px;color:#9CA3AF;margin-top:3px;}
+.order-card .oc-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px dashed #E5E7EB;}
+.order-card .oc-foot .price{font-size:15px;font-weight:700;color:var(--primary);}
+.order-card .oc-foot .btns{display:flex;gap:6px;}
+.order-card .oc-foot .btns .btn{height:30px;padding:0 12px;border-radius:15px;font-size:12px;font-weight:600;}
+.order-card .oc-foot .btns .btn.ghost{background:#F3F4F6;color:#4B5563;}
+.order-card .oc-foot .btns .btn.pri{background:var(--primary-grad);color:#fff;}
+.order-card .oc-foot .btns .btn.out{background:transparent;color:var(--primary);border:1px solid var(--primary);}
+
+/* ============ 预付费监管 ============ */
+.escrow-hero{background:linear-gradient(135deg,#7C3AED 0%,#A78BFA 100%);padding:14px 16px 60px;color:#fff;position:relative;}
+.escrow-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:30px;background:#F9FAFB;border-radius:18px 18px 0 0;}
+.escrow-info{display:flex;align-items:center;gap:10px;margin-top:14px;}
+.escrow-info .ei-ico{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.escrow-info .ei-text .t{font-size:15px;font-weight:700;}
+.escrow-info .ei-text .s{font-size:11px;opacity:.85;}
+
+.escrow-summary{background:#fff;margin:-30px 16px 14px;border-radius:14px;padding:16px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.escrow-summary .es{text-align:center;}
+.escrow-summary .es .v{font-size:22px;font-weight:800;color:var(--primary);}
+.escrow-summary .es .l{font-size:11px;color:#6B7280;margin-top:2px;}
+
+.escrow-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.escrow-card .ec-title{font-size:14px;font-weight:700;color:#111827;display:flex;justify-content:space-between;align-items:center;}
+.escrow-card .ec-title .badge{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600;background:#EDE9FE;color:#7C3AED;}
+.escrow-card .ec-progress{padding:10px 0;}
+.escrow-card .ec-progress .ep{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.escrow-card .ec-progress .ep-dot{width:20px;height:20px;border-radius:50%;background:var(--primary-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.escrow-card .ec-progress .ep-dot.done{background:var(--success);}
+.escrow-card .ec-progress .ep-dot.cur{background:var(--primary);box-shadow:0 0 0 4px rgba(234,88,12,.2);}
+.escrow-card .ec-progress .ep-text{font-size:11px;color:#4B5563;min-width:60px;}
+.escrow-card .ec-progress .ep-text small{display:block;color:#9CA3AF;font-size:10px;margin-top:1px;}
+.escrow-card .ec-progress .ep-line{flex:1;height:2px;background:#E5E7EB;margin:0 4px;margin-bottom:8px;}
+.escrow-card .ec-progress .ep-line.done{background:var(--success);}
+
+.rule-list .rule-item{display:flex;justify-content:space-between;padding:8px 0;font-size:12px;color:#4B5563;}
+.rule-list .rule-item .r-l{color:#9CA3AF;}
+.rule-list .rule-item+.rule-item{border-top:1px dashed #E5E7EB;}
+
+/* ============ 亲情账户 ============ */
+.family-hero{background:linear-gradient(135deg,#EC4899 0%,#F472B6 100%);padding:14px 16px 60px;color:#fff;position:relative;}
+.family-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:30px;background:#F9FAFB;border-radius:18px 18px 0 0;}
+.family-info{display:flex;align-items:center;gap:10px;margin-top:14px;}
+.family-info .fi-ico{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.family-info .fi-text .t{font-size:15px;font-weight:700;}
+.family-info .fi-text .s{font-size:11px;opacity:.85;}
+
+.family-tabs{display:flex;background:#fff;margin:-30px 16px 14px;border-radius:14px;padding:4px;box-shadow:var(--shadow);position:relative;z-index:2;}
+.family-tabs .ft{flex:1;text-align:center;padding:8px;font-size:13px;color:#6B7280;border-radius:10px;font-weight:600;}
+.family-tabs .ft.active{background:linear-gradient(135deg,#EC4899,#F472B6);color:#fff;}
+
+.family-card{background:#fff;margin:0 16px 12px;border-radius:14px;padding:14px;box-shadow:var(--shadow);position:relative;}
+.family-card .fc-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.family-card .fc-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#F472B6,#EC4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;}
+.family-card .fc-info{flex:1;}
+.family-card .fc-info .n{font-size:14px;font-weight:700;color:#111827;display:flex;align-items:center;gap:5px;}
+.family-card .fc-info .n .tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;background:#FEE2E2;color:#DC2626;}
+.family-card .fc-info .s{font-size:11px;color:#6B7280;margin-top:2px;}
+.family-card .fc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:12px;border-top:1px dashed #E5E7EB;}
+.family-card .fc-stats .fs{text-align:center;}
+.family-card .fc-stats .fs .v{font-size:15px;font-weight:700;color:var(--primary);}
+.family-card .fc-stats .fs .l{font-size:10px;color:#9CA3AF;margin-top:2px;}
+.family-card .fc-actions{display:flex;gap:6px;margin-top:12px;}
+.family-card .fc-actions .btn{flex:1;height:32px;border-radius:16px;font-size:11px;font-weight:600;}
+.family-card .fc-actions .btn.out{background:#FCE7F3;color:var(--primary);}
+.family-card .fc-actions .btn.pri{background:var(--primary-grad);color:#fff;}
+
+/* ============ 客服 ============ */
+.cs-hero{background:linear-gradient(135deg,#06B6D4 0%,#22D3EE 100%);padding:16px;color:#fff;}
+.cs-hero h2{font-size:20px;font-weight:800;}
+.cs-hero p{font-size:12px;opacity:.92;margin-top:6px;}
+
+.cs-hot{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 16px;}
+.cs-hot .ch{background:#fff;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:var(--shadow);cursor:pointer;}
+.cs-hot .ch .ci{font-size:24px;color:var(--primary);margin-bottom:4px;}
+.cs-hot .ch .ct{font-size:12px;color:#111827;font-weight:600;}
+.cs-hot .ch .cs{font-size:10px;color:#9CA3AF;margin-top:2px;}
+
+.cs-faq{background:#fff;margin:0 16px 14px;border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+.cs-faq .title{font-size:14px;font-weight:700;margin-bottom:10px;}
+.faq-cat{display:flex;flex-wrap:wrap;gap:8px;}
+.faq-cat .fc{padding:6px 12px;border-radius:18px;background:#F3F4F6;font-size:12px;color:#4B5563;}
+.faq-cat .fc.on{background:var(--primary-grad);color:#fff;}
+
+.cs-system{margin:0 16px 14px;border-radius:14px;background:#fff;padding:16px;box-shadow:var(--shadow);}
+.cs-system .css-t{font-size:14px;font-weight:700;margin-bottom:12px;text-align:center;}
+.cs-system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;}
+.cs-system-grid .g .gi{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#FEF3C7,#FED7AA);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--primary);}
+.cs-system-grid .g .gt{font-size:11px;font-weight:600;color:#111827;}
+.cs-system-grid .g .gs{font-size:10px;color:#9CA3AF;}
+.cs-system-n{display:flex;justify-content:space-around;margin-top:14px;padding-top:14px;border-top:1px dashed #E5E7EB;}
+.cs-system-n .sn{text-align:center;font-size:10px;color:#6B7280;}
+.cs-system-n .sn .v{display:block;font-size:14px;font-weight:700;color:var(--primary);}
+
+/* ============ 我的 ============ */
+.profile-hero{background:linear-gradient(135deg,#EA580C 0%,#F59E0B 100%);padding:30px 16px 60px;color:#fff;position:relative;}
+.profile-hero .ph-bg{position:absolute;top:0;right:0;width:140px;height:140px;background:rgba(255,255,255,.1);border-radius:50%;transform:translate(40%,-40%);}
+.profile-hero .ph-bg2{position:absolute;bottom:0;left:0;width:160px;height:160px;background:rgba(255,255,255,.08);border-radius:50%;transform:translate(-40%,40%);}
+.profile-card{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+.profile-card .pc-av{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;font-weight:700;border:3px solid rgba(255,255,255,.4);}
+.profile-card .pc-info .nm{font-size:18px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.profile-card .pc-info .nm .v{font-size:10px;background:rgba(255,255,255,.3);padding:2px 6px;border-radius:4px;font-weight:600;backdrop-filter:blur(10px);}
+.profile-card .pc-info .meta{font-size:12px;opacity:.92;margin-top:4px;display:flex;gap:6px;align-items:center;}
+.profile-card .pc-info .meta .v{background:rgba(255,255,255,.2);padding:2px 6px;border-radius:4px;font-size:10px;backdrop-filter:blur(10px);}
+
+.profile-data{background:#fff;margin:-30px 16px 14px;border-radius:14px;padding:16px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;position:relative;z-index:2;}
+.profile-data .pd .v{font-size:16px;font-weight:800;color:var(--primary);}
+.profile-data .pd .l{font-size:10px;color:#6B7280;margin-top:2px;}
+
+.menu-list{background:#fff;margin:0 16px 12px;border-radius:14px;padding:6px 0;box-shadow:var(--shadow);}
+.menu-list .ml-item{display:flex;align-items:center;padding:12px 14px;gap:10px;border-bottom:1px solid #F3F4F6;cursor:pointer;}
+.menu-list .ml-item:last-child{border-bottom:none;}
+.menu-list .mli-ico{width:30px;height:30px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:15px;}
+.menu-list .mli-text{flex:1;font-size:13px;color:#111827;font-weight:500;}
+.menu-list .mli-meta{font-size:11px;color:#9CA3AF;}
+.menu-list .mli-arrow{color:#9CA3AF;font-size:14px;}
+
+/* ============ 通用组件 ============ */
+.btn-main{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 20px;border-radius:20px;background:var(--primary-grad);color:#fff;font-size:14px;font-weight:600;}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 20px;border-radius:20px;background:#FFF;border:1px solid var(--primary);color:var(--primary);font-size:14px;font-weight:600;}
+.btn-sm{height:32px;padding:0 14px;border-radius:16px;font-size:12px;}
+
+/* ============ 评分 ============ */
+.score-bar{display:flex;align-items:center;gap:6px;font-size:11px;color:#6B7280;}
+.score-bar .bar{flex:1;height:4px;background:#F3F4F6;border-radius:2px;overflow:hidden;}
+.score-bar .fill{height:100%;background:linear-gradient(90deg,#EA580C,#F59E0B);border-radius:2px;}
+
+/* ============ 弹窗 ============ */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:flex-end;}
+.modal.active{display:flex;}
+.modal .sheet{background:#fff;width:100%;max-width:480px;margin:0 auto;border-radius:18px 18px 0 0;padding:16px;max-height:80%;overflow-y:auto;animation:slideUp .25s ease;-webkit-overflow-scrolling:touch;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal .sheet .hd{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #F3F4F6;}
+.modal .sheet .hd .t{font-size:16px;font-weight:700;}
+.modal .sheet .hd .x{width:28px;height:28px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+.modal .sheet .bd{padding:14px 0;}
+
+/* ============ Toast ============ */
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.78);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;z-index:300;display:none;backdrop-filter:blur(10px);max-width:80%;}
+.toast.show{display:block;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px);}to{opacity:1;transform:translate(-50%,0);}}
+
+/* ============ 风险测评 ============ */
+.risk-modal{padding:0;}
+.risk-step{padding:18px 16px;}
+.risk-q{font-size:16px;font-weight:700;color:#111827;line-height:1.5;margin-bottom:18px;}
+.risk-opts .ro{padding:14px;border:1.5px solid #E5E7EB;border-radius:12px;margin-bottom:10px;font-size:14px;color:#4B5563;cursor:pointer;transition:all .2s;}
+.risk-opts .ro.active{border-color:var(--primary);background:#FFF7ED;color:var(--primary);font-weight:600;}
+.risk-progress{display:flex;gap:4px;margin-bottom:18px;}
+.risk-progress .rp{flex:1;height:4px;background:#E5E7EB;border-radius:2px;}
+.risk-progress .rp.done{background:var(--primary);}
+
+/* ============ 充值金额选择 ============ */
+.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.amount-cell{padding:14px;border:1.5px solid var(--border);border-radius:12px;text-align:center;color:#4B5563;font-weight:600;cursor:pointer;}
+.amount-cell.on{border-color:var(--primary);background:#FFF7ED;color:var(--primary);}
+
+/* ============ 工具 ============ */
+.row{display:flex;align-items:center;}
+.col{display:flex;flex-direction:column;}
+.between{display:flex;align-items:center;justify-content:space-between;}
+.gap-4{gap:4px;}.gap-6{gap:6px;}.gap-8{gap:8px;}.gap-10{gap:10px;}.gap-12{gap:12px;}
+.mt-4{margin-top:4px;}.mt-8{margin-top:8px;}.mt-12{margin-top:12px;}.mt-16{margin-top:16px;}
+.mb-8{margin-bottom:8px;}.mb-12{margin-bottom:12px;}.mb-16{margin-bottom:16px;}
+.p-16{padding:16px;}
+.text-c{text-align:center;}
+.fs-10{font-size:10px;}.fs-11{font-size:11px;}.fs-12{font-size:12px;}.fs-13{font-size:13px;}.fs-14{font-size:14px;}.fs-15{font-size:15px;}
+.fw-6{font-weight:600;}.fw-7{font-weight:700;}.fw-8{font-weight:800;}
+.c1{color:var(--primary);}.c2{color:var(--text-2);}.c3{color:var(--text-3);}.c4{color:var(--text-4);}
+.bg-w{background:var(--white);}
+
+/* 空状态 */
+.empty{padding:40px 20px;text-align:center;color:#9CA3AF;font-size:13px;}
+.empty .e-ico{font-size:48px;margin-bottom:10px;opacity:.4;}
+
+/* 底部安全距离 */
+.safe-bottom{height:env(safe-area-inset-bottom);}
+
+/* 时间线 */
+.timeline{padding:0;}
+.timeline .ti{display:flex;gap:10px;padding:8px 0;}
+.timeline .ti .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);margin-top:5px;flex-shrink:0;position:relative;}
+.timeline .ti .dot::after{content:"";position:absolute;top:14px;left:4px;width:2px;height:40px;background:#E5E7EB;}
+.timeline .ti:last-child .dot::after{display:none;}
+.timeline .ti .txt{font-size:12px;color:#4B5563;line-height:1.6;flex:1;}
+.timeline .ti .txt strong{color:#111827;}
+
+/* 适配 */
+@media(max-width:340px){.matrix{gap:8px;}.matrix-item{padding:12px 4px;}.hero-stats{gap:4px;}.hero-stat{padding:6px 2px;}.cs-hot{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span id="clock">9:41</span>
+    <div class="right">
+      <span>📶</span>
+      <span>📡</span>
+      <span class="battery"><i></i></span>
+    </div>
+  </div>
+
+  <!-- 页面容器 -->
+  <div class="pages" id="pages">
+
+    <!-- ========== 1. 总门户首页 ========== -->
+    <div class="page active" id="page-home">
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-logo">苏</div>
+          <div class="brand-name">苏心养老<small>数字人民币服务平台·江苏</small></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">🔍</div>
+          <div class="icon-btn">🔔<span class="dot"></span></div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-title">苏心养老 · 安享无忧</div>
+        <div class="hero-sub">政府监管 · 老人点单 · 服务商竞争 · 数币结算 · 金融增值</div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="n">160<span style="font-size:10px">万</span></div><div class="l">失能老人</div></div>
+          <div class="hero-stat"><div class="n">1900<span style="font-size:10px">万</span></div><div class="l">覆盖老人</div></div>
+          <div class="hero-stat"><div class="n">13</div><div class="l">市覆盖</div></div>
+          <div class="hero-stat"><div class="n">800</div><div class="l">最高/月元</div></div>
+        </div>
+        <div class="hero-cta">
+          <button class="btn-hero" onclick="goCoupons()">🎁 立即领取消费券</button>
+          <button class="btn-hero outline" onclick="goMarket()">📋 服务点单</button>
+        </div>
+      </div>
+
+      <!-- 用户状态卡 -->
+      <div class="user-card">
+        <div class="user-card-row">
+          <div class="avatar">凤</div>
+          <div class="user-info">
+            <div class="name">王金凤 <span class="vip">VIP3</span></div>
+            <div class="meta">
+              <span class="tag">失能二级</span>
+              <span class="tag ok">已实名</span>
+              <span>75岁 · 南京鼓楼</span>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="fs-10 c3">钱包余额</div>
+            <div class="fw-8 fs-15 c1" style="line-height:1.4;">¥1,500.00</div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-action" onclick="goCoupons()"><div class="qa-ico o">🎁</div>消费券</div>
+          <div class="quick-action" onclick="goWallet()"><div class="qa-ico o">💰</div>钱包</div>
+          <div class="quick-action" onclick="goWealth()"><div class="qa-ico o">📈</div>理财</div>
+          <div class="quick-action" onclick="goMarket()"><div class="qa-ico o">📋</div>点单</div>
+        </div>
+      </div>
+
+      <!-- 5大产品矩阵 -->
+      <div class="section">
+        <div class="section-title">
+          <h3>5+1 产品矩阵</h3>
+          <span class="more">全场景养老金融 ›</span>
+        </div>
+        <div class="matrix">
+          <div class="matrix-item m1" onclick="goCoupons()">
+            <span class="mi-tag hot">HOT</span>
+            <div class="mi-ico">🎁</div>
+            <div class="mi-name">苏心消费券</div>
+            <div class="mi-sub">政府补贴</div>
+          </div>
+          <div class="matrix-item m2" onclick="goWallet()">
+            <span class="mi-tag dot">ACTIVE</span>
+            <div class="mi-ico">💳</div>
+            <div class="mi-name">苏心钱包</div>
+            <div class="mi-sub">数币专户</div>
+          </div>
+          <div class="matrix-item m3" onclick="goWealth()">
+            <span class="mi-tag new">NEW</span>
+            <div class="mi-ico">📈</div>
+            <div class="mi-name">苏心理财</div>
+            <div class="mi-sub">稳健增值</div>
+          </div>
+          <div class="matrix-item m4" onclick="goMarket()">
+            <div class="mi-ico">🚚</div>
+            <div class="mi-name">供应链金融</div>
+            <div class="mi-sub">服务商</div>
+          </div>
+          <div class="matrix-item m5" onclick="goEscrow()">
+            <div class="mi-ico">🛡️</div>
+            <div class="mi-name">苏心监管</div>
+            <div class="mi-sub">智能合约</div>
+          </div>
+          <div class="matrix-item m6" onclick="goFamily()">
+            <div class="mi-ico">👨‍👩‍👧</div>
+            <div class="mi-name">亲情账户</div>
+            <div class="mi-sub">远程守护</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5类业务场景 -->
+      <div class="section">
+        <div class="section-title">
+          <h3>5类业务场景</h3>
+          <span class="more">全龄段覆盖 ›</span>
+        </div>
+        <div class="scenes">
+          <div class="scene-card c1" onclick="goMarket('home')"><div class="sc-ico">🏠</div><div class="sc-t">居家上门</div><div class="sc-s">350+家服务商</div></div>
+          <div class="scene-card c2" onclick="goMarket('inst')"><div class="sc-ico">🏥</div><div class="sc-t">机构养老</div><div class="sc-s">120+家签约</div></div>
+          <div class="scene-card c3" onclick="goMarket('comm')"><div class="sc-ico">🏘️</div><div class="sc-t">社区养老</div><div class="sc-s">480+综合体</div></div>
+          <div class="scene-card c4" onclick="goMarket('prod')"><div class="sc-ico">🛏️</div><div class="sc-t">适老化产品</div><div class="sc-s">2000+SKU</div></div>
+          <div class="scene-card c5" onclick="goEscrow()"><div class="sc-ico">🤝</div><div class="sc-t">预付费监管</div><div class="sc-s">智能合约保障</div></div>
+        </div>
+      </div>
+
+      <!-- 钱包双轨 -->
+      <div class="section">
+        <div class="section-title">
+          <h3>软硬钱包双轨</h3>
+          <span class="more">数字人民币 ›</span>
+        </div>
+        <div class="wallet-dual">
+          <div class="wd-card" onclick="goWallet()">
+            <div class="wd-t">📱 软钱包</div>
+            <div class="wd-b">¥1,500<span style="font-size:12px">.00</span></div>
+            <div class="wd-s">养老专户 · 已激活</div>
+          </div>
+          <div class="wd-card" onclick="toast('请前往银行网点领取硬钱包')">
+            <div class="wd-t">💳 硬钱包</div>
+            <div class="wd-b">¥0<span style="font-size:12px">.00</span></div>
+            <div class="wd-s">智能卡片 · 可领取</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 活动专区 -->
+      <div class="section">
+        <div class="section-title">
+          <h3>限时活动</h3>
+          <span class="more">更多 ›</span>
+        </div>
+        <div class="activity">
+          <div class="act-card a1" onclick="toast('活动即将开启')">
+            <div>
+              <div class="at-t">新人理财红包</div>
+              <div class="at-s">最高 ¥888</div>
+            </div>
+            <div class="at-ico">🧧</div>
+          </div>
+          <div class="act-card a2" onclick="toast('跳转健康咨询')">
+            <div>
+              <div class="at-t">免费健康咨询</div>
+              <div class="at-s">三甲专家 1v1</div>
+            </div>
+            <div class="at-ico">⚕️</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 数据看板 -->
+      <div class="dashboard">
+        <div class="dash-title">
+          <span>📊 平台数据看板</span>
+          <span class="refresh">🔄 实时更新</span>
+        </div>
+        <div class="dash-grid">
+          <div class="dash-cell">
+            <div class="v">¥8.6<span style="font-size:11px">亿</span></div>
+            <div class="l">已发消费券总额</div>
+            <div class="trend">↑ 12.5% 同比</div>
+          </div>
+          <div class="dash-cell b">
+            <div class="v">350<span style="font-size:11px">万</span></div>
+            <div class="l">累计服务老人</div>
+            <div class="trend">↑ 38.2% 同比</div>
+          </div>
+          <div class="dash-cell g">
+            <div class="v">2380</div>
+            <div class="l">签约服务商</div>
+            <div class="trend">↑ 156家 今年</div>
+          </div>
+          <div class="dash-cell p">
+            <div class="v">¥42<span style="font-size:11px">亿</span></div>
+            <div class="l">平台交易额</div>
+            <div class="trend">↑ 25.8% 同比</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 公告 -->
+      <div class="notice">
+        <span class="notice-tag">公告</span>
+        <span class="notice-text" id="noticeText">📢 2026年8月苏心养老失能老人消费券8月1日已开放领取</span>
+      </div>
+
+      <!-- 底部推荐 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>为您推荐</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row gap-12" style="align-items:center;">
+            <div style="width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,#FED7AA,#FEF3C7);display:flex;align-items:center;justify-content:center;font-size:30px;">🛏️</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">护理床·电动升降</div>
+              <div class="fs-11 c3" style="margin-top:3px;">适老化 · 政府补贴 30%</div>
+              <div class="row gap-8 mt-8">
+                <span class="c1 fw-8 fs-15">¥2,899</span>
+                <span class="fs-10 c3" style="text-decoration:line-through;">¥4,199</span>
+                <span style="font-size:10px;background:#FEE2E2;color:#DC2626;padding:1px 5px;border-radius:3px;font-weight:600;">立减¥1300</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-w mt-12" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row gap-12" style="align-items:center;">
+            <div style="width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);display:flex;align-items:center;justify-content:center;font-size:30px;">⌚</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">智能跌倒监测手环</div>
+              <div class="fs-11 c3" style="margin-top:3px;">SOS一键呼叫 · 自动定位</div>
+              <div class="row gap-8 mt-8">
+                <span class="c1 fw-8 fs-15">¥599</span>
+                <span class="fs-10 c3">月销 1280 件</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 民生资讯 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>民生资讯</h3><span class="more">更多 ›</span></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div style="padding:10px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13 fw-6" style="line-height:1.5;">江苏发布2026年养老消费券新政策，覆盖人群扩大至350万人</div>
+            <div class="fs-11 c3 mt-8">2026-08-05 · 江苏省民政厅</div>
+          </div>
+          <div style="padding:10px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13 fw-6" style="line-height:1.5;">数字人民币硬钱包即将支持线上申领，足不出户即可办理</div>
+            <div class="fs-11 c3 mt-8">2026-08-03 · 中国人民银行南京分行</div>
+          </div>
+          <div style="padding:10px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13 fw-6" style="line-height:1.5;">苏心养老平台联合10家头部养老机构发布服务标准</div>
+            <div class="fs-11 c3 mt-8">2026-07-28 · 江苏省养老服务协会</div>
+          </div>
+          <div style="padding:10px 0;">
+            <div class="fs-13 fw-6" style="line-height:1.5;">智能合约预付费监管案例发布，3亿元养老押金全程可追溯</div>
+            <div class="fs-11 c3 mt-8">2026-07-22 · 江苏金融监管局</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 服务商入口 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>服务商/监管方 入口</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row" style="gap:14px;">
+            <div style="flex:1;text-align:center;padding:12px;background:linear-gradient(135deg,#FEF3C7,#FED7AA);border-radius:10px;cursor:pointer;" onclick="toast('跳转服务商后台')">
+              <div style="font-size:28px;">🏥</div>
+              <div class="fs-12 fw-7 mt-8 c1">我是服务商</div>
+              <div class="fs-10 c3 mt-4">订单管理 · 资金结算</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:12px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border-radius:10px;cursor:pointer;" onclick="toast('跳转监管后台')">
+              <div style="font-size:28px;">🛡️</div>
+              <div class="fs-12 fw-7 mt-8" style="color:#2563EB;">我是监管方</div>
+              <div class="fs-10 c3 mt-4">数据看板 · 风控预警</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:12px;background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border-radius:10px;cursor:pointer;" onclick="toast('跳转运营后台')">
+              <div style="font-size:28px;">⚙️</div>
+              <div class="fs-12 fw-7 mt-8" style="color:#059669;">运营后台</div>
+              <div class="fs-10 c3 mt-4">用户管理 · 营销</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 政策背景 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>政策背景</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div style="font-size:13px;color:#4B5563;line-height:1.7;">
+            苏心养老平台是由<strong style="color:var(--primary);">江苏省民政厅</strong>联合<strong style="color:var(--primary);">人民银行南京分行</strong>、<strong style="color:var(--primary);">江苏金融监管局</strong>共同指导建设的省级养老金融基础设施。
+            平台以数字人民币为核心载体，整合消费券发放、智能合约预付费监管、养老理财、供应链金融、亲情守护等全方位功能，
+            为全省160万失能老人和1900万活力老人提供<strong style="color:var(--primary);">"苏心"</strong>的养老金融服务。
+          </div>
+          <div style="background:#FEF3C7;padding:10px 12px;border-radius:8px;font-size:11px;color:#92400E;margin-top:12px;">
+            🏛 平台已接入江苏省民政厅养老数据、人民银行数字人民币系统、江苏金融监管局风控系统
+          </div>
+        </div>
+      </div>
+
+      <!-- 银龄大学 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>银龄大学</h3><span class="more">查看全部 ›</span></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,#FCE7F3,#FBCFE8);display:flex;align-items:center;justify-content:center;font-size:24px;">📚</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">智能手机使用入门</div>
+              <div class="fs-11 c3 mt-4">8节课 · 李老师 · ★ 4.9</div>
+              <div class="row gap-6 mt-8">
+                <span style="font-size:10px;background:#FEF3C7;color:#D97706;padding:1px 5px;border-radius:3px;font-weight:600;">免费</span>
+                <span class="fs-10 c3">已报名1,820人</span>
+              </div>
+            </div>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);display:flex;align-items:center;justify-content:center;font-size:24px;">🎨</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">老年国画班(初级)</div>
+              <div class="fs-11 c3 mt-4">12节课 · 王教授 · ★ 5.0</div>
+              <div class="row gap-6 mt-8">
+                <span style="font-size:10px;background:#D1FAE5;color:#059669;padding:1px 5px;border-radius:3px;font-weight:600;">政府补贴</span>
+                <span class="fs-10 c3">已报名680人</span>
+              </div>
+            </div>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,#D1FAE5,#A7F3D0);display:flex;align-items:center;justify-content:center;font-size:24px;">🏃</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">八段锦晨练班</div>
+              <div class="fs-11 c3 mt-4">周一三五 · 公园场地</div>
+              <div class="row gap-6 mt-8">
+                <span style="font-size:10px;background:#FEE2E2;color:#DC2626;padding:1px 5px;border-radius:3px;font-weight:600;">已满</span>
+                <span class="fs-10 c3">下期 8月15日</span>
+              </div>
+            </div>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;align-items:center;">
+            <div style="width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,#FED7AA,#FEF3C7);display:flex;align-items:center;justify-content:center;font-size:24px;">💃</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-7">广场舞进阶班</div>
+              <div class="fs-11 c3 mt-4">周二四六 · 张老师</div>
+              <div class="row gap-6 mt-8">
+                <span style="font-size:10px;background:#D1FAE5;color:#059669;padding:1px 5px;border-radius:3px;font-weight:600;">免费</span>
+                <span class="fs-10 c3">剩余12位</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 老年活动广场 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>活动广场</h3><span class="more">最新活动 ›</span></div>
+        <div style="background:linear-gradient(135deg,#FCE7F3,#FBCFE8);border-radius:14px;padding:16px;box-shadow:var(--shadow);color:#831843;">
+          <div class="row between">
+            <div>
+              <div class="fs-11" style="opacity:.85;">8月12日 (下周三)</div>
+              <div style="font-size:16px;font-weight:800;margin-top:4px;">江苏省第十届老年文化艺术节</div>
+              <div class="fs-11 mt-8" style="opacity:.85;">📍 南京奥体中心 · 14:00 开幕</div>
+            </div>
+            <div style="font-size:40px;opacity:.5;">🎭</div>
+          </div>
+          <button class="btn-main btn-sm mt-12" style="background:linear-gradient(135deg,#EC4899,#F472B6);" onclick="toast('已为您预留座位')">立即报名 →</button>
+        </div>
+        <div style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);border-radius:14px;padding:16px;box-shadow:var(--shadow);color:#1E3A8A;margin-top:12px;">
+          <div class="row between">
+            <div>
+              <div class="fs-11" style="opacity:.85;">8月20日</div>
+              <div style="font-size:16px;font-weight:800;margin-top:4px;">"苏心助老"名医义诊</div>
+              <div class="fs-11 mt-8" style="opacity:.85;">📍 鼓楼区民政局 · 9:00-16:00</div>
+            </div>
+            <div style="font-size:40px;opacity:.5;">⚕️</div>
+          </div>
+          <button class="btn-main btn-sm mt-12" style="background:linear-gradient(135deg,#3B82F6,#60A5FA);" onclick="toast('已为您预约')">立即预约 →</button>
+        </div>
+      </div>
+
+      <!-- 平台生态 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>平台生态</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center;">
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#FEF3C7,#FED7AA);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">🏛️</div>
+              <div class="fs-12 fw-7 mt-8">政府</div>
+              <div class="fs-10 c3 mt-4">政策支持</div>
+            </div>
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#DBEAFE,#BFDBFE);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">🏦</div>
+              <div class="fs-12 fw-7 mt-8">银行</div>
+              <div class="fs-10 c3 mt-4">金融服务</div>
+            </div>
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#D1FAE5,#A7F3D0);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">🏥</div>
+              <div class="fs-12 fw-7 mt-8">服务商</div>
+              <div class="fs-10 c3 mt-4">提供服务</div>
+            </div>
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#FCE7F3,#FBCFE8);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">👴</div>
+              <div class="fs-12 fw-7 mt-8">老人</div>
+              <div class="fs-10 c3 mt-4">核心用户</div>
+            </div>
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#EDE9FE,#DDD6FE);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">👨‍👩‍👧</div>
+              <div class="fs-12 fw-7 mt-8">家属</div>
+              <div class="fs-10 c3 mt-4">远程守护</div>
+            </div>
+            <div>
+              <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#FED7AA,#FEF3C7);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;">🛡️</div>
+              <div class="fs-12 fw-7 mt-8">监管</div>
+              <div class="fs-10 c3 mt-4">合规审查</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 帮助中心 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>新手指南</h3></div>
+        <div style="background:#fff;border-radius:14px;padding:0;box-shadow:var(--shadow);">
+          <div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:#FFF7ED;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">1</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">如何激活数币钱包？</div>
+              <div class="fs-11 c3 mt-4">实名认证后自动激活，5分钟开通</div>
+            </div>
+            <span class="c4">›</span>
+          </div>
+          <div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:#FFF7ED;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">2</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">如何领取消费券？</div>
+              <div class="fs-11 c3 mt-4">每月1号自动到账，无需主动领取</div>
+            </div>
+            <span class="c4">›</span>
+          </div>
+          <div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:#FFF7ED;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">3</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">如何点单养老服务？</div>
+              <div class="fs-11 c3 mt-4">进入服务市场 → 选服务商 → 即时下单</div>
+            </div>
+            <span class="c4">›</span>
+          </div>
+          <div style="padding:14px;display:flex;align-items:center;gap:10px;">
+            <div style="width:30px;height:30px;border-radius:8px;background:#FFF7ED;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">4</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">如何绑定亲情账户？</div>
+              <div class="fs-11 c3 mt-4">我的 → 亲情账户 → 邀请家属</div>
+            </div>
+            <span class="c4">›</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 合作银行 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>合作银行</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;">
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">工商银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">农业银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">建设银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">中国银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">交通银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">招商银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">邮储银行</div></div>
+            <div><div style="font-size:36px;">🏦</div><div class="fs-11 fw-6 mt-8">更多 ›</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 服务商等级说明 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>服务商等级体系</h3></div>
+        <div style="background:#fff;border-radius:14px;padding:0;box-shadow:var(--shadow);overflow:hidden;">
+          <div style="padding:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,#FEF3C7,#FED7AA);">
+            <div style="font-size:32px;">🏆</div>
+            <div>
+              <div class="fs-14 fw-7">AAA级 · 五星服务商</div>
+              <div class="fs-11 c3 mt-4">2380家 · 占比 8%</div>
+            </div>
+          </div>
+          <div style="padding:14px;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,#F3F4F6,#E5E7EB);border-top:1px solid var(--border);">
+            <div style="font-size:28px;">🥈</div>
+            <div>
+              <div class="fs-14 fw-7">AA级 · 四星服务商</div>
+              <div class="fs-11 c3 mt-4">5680家 · 占比 19%</div>
+            </div>
+          </div>
+          <div style="padding:14px;display:flex;align-items:center;gap:12px;border-top:1px solid var(--border);">
+            <div style="font-size:24px;">🥉</div>
+            <div>
+              <div class="fs-14 fw-7">A级 · 合格服务商</div>
+              <div class="fs-11 c3 mt-4">21600家 · 占比 73%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 版权 -->
+      <div style="margin:24px 16px;text-align:center;color:#9CA3AF;font-size:11px;padding:14px;line-height:1.6;background:#fff;border-radius:14px;box-shadow:var(--shadow);">
+        <div style="font-size:34px;color:var(--primary);">苏</div>
+        <div class="fw-7 mt-8" style="color:#111827;">苏心养老 V2.0</div>
+        <div class="mt-8">© 2026 国金数联科技</div>
+        <div class="mt-4">客服热线 400-7890588</div>
+        <div class="mt-8">江苏省民政厅 · 人民银行南京分行 · 江苏金融监管局</div>
+        <div class="mt-8 fs-10" style="opacity:.7;">江苏省级养老金融基础设施</div>
+      </div>
+
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 2. 消费券中心 ========== -->
+    <div class="page" id="page-coupons">
+      <div class="topbar">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;">‹</button>
+          <div class="brand-name">消费券中心</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">📋</div>
+        </div>
+      </div>
+
+      <div class="coupon-hero">
+        <div class="row between">
+          <div>
+            <div class="fs-12" style="opacity:.85;">我的消费券总额</div>
+            <div style="font-size:32px;font-weight:800;margin-top:4px;">¥2,000<span style="font-size:16px">.00</span></div>
+            <div class="fs-12" style="opacity:.85;margin-top:2px;">本月可用 · 4张券</div>
+          </div>
+          <button class="btn-hero outline" style="height:36px;font-size:13px;" onclick="toast('查看领取历史')">领取记录 ›</button>
+        </div>
+        <div class="coupon-summary">
+          <div class="cs-cell"><div class="v">¥450</div><div class="l">失能券余额</div></div>
+          <div class="cs-cell"><div class="v">¥1,550</div><div class="l">本月累计</div></div>
+          <div class="cs-cell"><div class="v">3<small style="font-size:11px;">张</small></div><div class="l">待使用</div></div>
+        </div>
+      </div>
+
+      <div class="coupon-tabs">
+        <div class="ct active" onclick="switchCouponTab(0)">未使用(3)</div>
+        <div class="ct" onclick="switchCouponTab(1)">已使用(5)</div>
+        <div class="ct" onclick="switchCouponTab(2)">已过期</div>
+      </div>
+
+      <div id="couponPanel0" class="coupon-panel">
+        <div class="section" style="padding-top:0;">
+          <!-- 失能老人消费券 -->
+          <div class="coupon-card">
+            <span class="cc-badge ing">使用中</span>
+            <div class="cc-left">
+              <div class="cc-amount"><small>¥</small>800</div>
+              <div class="cc-type">失能老人券</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">失能老人护理消费券</div>
+              <div class="cc-meta">编号: SXYL202608-1025<br>有效期: 2026.08.01-08.31<br>范围: 居家上门服务</div>
+              <div class="cc-progress">
+                <div class="bar"><div class="fill" style="width:43%;"></div></div>
+                <div class="info"><span>已用 ¥350</span><span>剩余 ¥450</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 高龄津贴 -->
+          <div class="coupon-card">
+            <span class="cc-badge ok">已发放</span>
+            <div class="cc-left">
+              <div class="cc-amount"><small>¥</small>200</div>
+              <div class="cc-type">高龄津贴</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">75岁高龄津贴</div>
+              <div class="cc-meta">编号: GLJT202608-1012<br>发放日期: 2026.08.05<br>范围: 全场景通用</div>
+              <div class="cc-progress">
+                <div class="bar"><div class="fill" style="width:0%;"></div></div>
+                <div class="info"><span>已用 ¥0</span><span>剩余 ¥200</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 护理补贴 -->
+          <div class="coupon-card">
+            <span class="cc-badge ok">已发放</span>
+            <div class="cc-left">
+              <div class="cc-amount"><small>¥</small>500</div>
+              <div class="cc-type">护理补贴</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">失能老人护理补贴</div>
+              <div class="cc-meta">编号: HLBT202608-1086<br>发放日期: 2026.08.01<br>范围: 专业护理服务</div>
+              <div class="cc-progress">
+                <div class="bar"><div class="fill" style="width:30%;"></div></div>
+                <div class="info"><span>已用 ¥150</span><span>剩余 ¥350</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 适老化产品券 -->
+          <div class="coupon-card">
+            <span class="cc-badge ing">可使用</span>
+            <div class="cc-left">
+              <div class="cc-amount"><small>¥</small>500</div>
+              <div class="cc-type">适老化券</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">适老化产品消费券</div>
+              <div class="cc-meta">编号: SLL202608-0903<br>有效期: 2026.07.01-09.30<br>范围: 适老化产品购买</div>
+              <div class="cc-progress">
+                <div class="bar"><div class="fill" style="width:0%;"></div></div>
+                <div class="info"><span>已用 ¥0</span><span>剩余 ¥500</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:20px 0;text-align:center;">
+            <button class="btn-main" onclick="toast('领取成功！2026年9月消费券已到账')">🎁 领取新一期消费券</button>
+            <div class="fs-11 c3" style="margin-top:8px;">下一期发放: 2026-09-01</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="couponPanel1" class="coupon-panel" style="display:none;">
+        <div class="section" style="padding-top:14px;">
+          <div class="coupon-card" style="opacity:0.6;">
+            <span class="cc-badge gray">已使用</span>
+            <div class="cc-left">
+              <div class="cc-amount" style="color:#9CA3AF;"><small>¥</small>800</div>
+              <div class="cc-type">失能老人券</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">2026年7月失能老人券</div>
+              <div class="cc-meta">使用日期: 2026-07-28<br>使用商家: 南京鼓楼护理站</div>
+            </div>
+          </div>
+          <div class="coupon-card" style="opacity:0.6;">
+            <span class="cc-badge gray">已使用</span>
+            <div class="cc-left">
+              <div class="cc-amount" style="color:#9CA3AF;"><small>¥</small>200</div>
+              <div class="cc-type">高龄津贴</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">7月高龄津贴</div>
+              <div class="cc-meta">使用日期: 2026-07-12<br>使用商家: 苏心家政</div>
+            </div>
+          </div>
+          <div class="coupon-card" style="opacity:0.6;">
+            <span class="cc-badge gray">已使用</span>
+            <div class="cc-left">
+              <div class="cc-amount" style="color:#9CA3AF;"><small>¥</small>500</div>
+              <div class="cc-type">护理补贴</div>
+            </div>
+            <div class="cc-right">
+              <div class="cc-title">7月护理补贴</div>
+              <div class="cc-meta">使用日期: 2026-07-20<br>使用商家: 金康护理院</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="couponPanel2" class="coupon-panel" style="display:none;">
+        <div class="section" style="padding-top:14px;">
+          <div class="empty">
+            <div class="e-ico">📂</div>
+            <div>暂无过期消费券</div>
+            <div class="fs-11 c4" style="margin-top:4px;">您的消费券使用情况良好</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 历史记录 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>使用记录</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:8px 14px;box-shadow:var(--shadow);">
+          <div class="row between" style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13">2026-08-05 14:23</div>
+            <div class="row gap-8">
+              <span class="fs-12 c3">南京鼓楼护理站</span>
+              <span style="color:#111827;font-weight:700;">-¥150.00</span>
+            </div>
+          </div>
+          <div class="row between" style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13">2026-08-03 10:15</div>
+            <div class="row gap-8">
+              <span class="fs-12 c3">居家上门助浴</span>
+              <span style="color:#111827;font-weight:700;">-¥200.00</span>
+            </div>
+          </div>
+          <div class="row between" style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13">2026-08-02 16:24</div>
+            <div class="row gap-8">
+              <span class="fs-12 c3">女儿充值(亲情)</span>
+              <span style="color:var(--success);font-weight:700;">+¥500.00</span>
+            </div>
+          </div>
+          <div class="row between" style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <div class="fs-13">2026-08-01 09:00</div>
+            <div class="row gap-8">
+              <span class="fs-12 c3">月度券到账</span>
+              <span style="color:var(--success);font-weight:700;">+¥800.00</span>
+            </div>
+          </div>
+          <div class="row between" style="padding:8px 0;">
+            <div class="fs-13">2026-08-01 09:00</div>
+            <div class="row gap-8">
+              <span class="fs-12 c3">护理补贴到账</span>
+              <span style="color:var(--success);font-weight:700;">+¥500.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 3. 钱包中心 ========== -->
+    <div class="page" id="page-wallet">
+      <div class="topbar">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;">‹</button>
+          <div class="brand-name">钱包中心</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">📊</div>
+          <div class="icon-btn">⚙️</div>
+        </div>
+      </div>
+
+      <div class="wallet-hero">
+        <div class="wallet-card">
+          <div class="bl">数币钱包余额</div>
+          <div class="br">软钱包 + 硬钱包</div>
+        </div>
+        <div class="wallet-balance">¥1,500<small>.00</small></div>
+        <div class="wallet-status">
+          <div class="ws"><span class="dot"></span>数币钱包 已激活</div>
+          <div class="ws"><span class="dot y"></span>硬钱包 待领取</div>
+          <div class="ws">📡 在线支付</div>
+        </div>
+      </div>
+
+      <div class="wallet-tabs">
+        <div class="wt active" onclick="switchWallet(0)">数币钱包</div>
+        <div class="wt" onclick="switchWallet(1)">医保个账</div>
+        <div class="wt" onclick="switchWallet(2)">养老金账户</div>
+      </div>
+
+      <div id="walletPanel0" class="wallet-panel">
+        <!-- 钱包快捷功能 -->
+        <div class="wallet-quick">
+          <div class="wq" onclick="showModal('recharge')"><div class="wi" style="background:linear-gradient(135deg,#EA580C,#F59E0B);">⬆️</div><div class="wt">充值</div></div>
+          <div class="wq" onclick="showModal('withdraw')"><div class="wi" style="background:linear-gradient(135deg,#3B82F6,#60A5FA);">⬇️</div><div class="wt">提现</div></div>
+          <div class="wq" onclick="goFamily()"><div class="wi" style="background:linear-gradient(135deg,#EC4899,#F472B6);">👨‍👩‍👧</div><div class="wt">亲情</div></div>
+          <div class="wq" onclick="toast('已生成交易二维码')"><div class="wi" style="background:linear-gradient(135deg,#10B981,#34D399);">📲</div><div class="wt">付款码</div></div>
+        </div>
+
+        <!-- 本月收支图表 -->
+        <div class="section" style="padding-top:0;">
+          <div class="section-title">
+            <h3>本月收支</h3>
+            <span class="more">详单 ›</span>
+          </div>
+          <div class="bg-w" style="border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);">
+            <div class="row between mb-12">
+              <div class="text-c" style="flex:1;">
+                <div class="c1 fw-8 fs-15">+¥2,200</div>
+                <div class="fs-11 c3">收入</div>
+              </div>
+              <div style="width:1px;background:var(--border);height:30px;"></div>
+              <div class="text-c" style="flex:1;">
+                <div class="fw-8 fs-15" style="color:#111827;">-¥700</div>
+                <div class="fs-11 c3">支出</div>
+              </div>
+              <div style="width:1px;background:var(--border);height:30px;"></div>
+              <div class="text-c" style="flex:1;">
+                <div class="fw-8 fs-15" style="color:var(--success);">¥1,500</div>
+                <div class="fs-11 c3">结余</div>
+              </div>
+            </div>
+            <!-- 简单柱状图 -->
+            <div style="display:flex;align-items:flex-end;gap:6px;height:80px;padding:8px 4px 0;">
+              <div style="flex:1;text-align:center;">
+                <div style="height:30px;background:linear-gradient(180deg,#EA580C,#F59E0B);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/1</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:50px;background:linear-gradient(180deg,#3B82F6,#60A5FA);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/2</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:60px;background:linear-gradient(180deg,#EF4444,#F87171);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/3</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:40px;background:linear-gradient(180deg,#3B82F6,#60A5FA);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/4</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:70px;background:linear-gradient(180deg,#EF4444,#F87171);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/5</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:45px;background:linear-gradient(180deg,#3B82F6,#60A5FA);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/6</div>
+              </div>
+              <div style="flex:1;text-align:center;">
+                <div style="height:35px;background:linear-gradient(180deg,#EC4899,#F472B6);border-radius:4px 4px 0 0;"></div>
+                <div class="fs-10 c3 mt-4">8/7</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" style="padding-top:0;">
+          <div class="section-title">
+            <h3>钱包明细</h3>
+            <span class="more">全部 ›</span>
+          </div>
+          <div class="wallet-card-2">
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#EA580C,#F59E0B);">🎁</div>
+              <div class="wc-text"><div class="t">失能老人消费券入账</div><div class="s">08-01 09:00 · 政府发放</div></div>
+              <div class="wc-amt up">+¥800.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#3B82F6,#60A5FA);">💊</div>
+              <div class="wc-text"><div class="t">居家上门助浴服务</div><div class="s">08-03 10:15 · 鼓楼护理站</div></div>
+              <div class="wc-amt down">-¥200.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA);">👨‍👩‍👧</div>
+              <div class="wc-text"><div class="t">女儿张女士充值</div><div class="s">08-02 16:24 · 亲情账户转入</div></div>
+              <div class="wc-amt up">+¥500.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#10B981,#34D399);">💊</div>
+              <div class="wc-text"><div class="t">专业护理服务</div><div class="s">08-05 14:23 · 鼓楼护理站</div></div>
+              <div class="wc-amt down">-¥150.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#EA580C,#F59E0B);">🪙</div>
+              <div class="wc-text"><div class="t">高龄津贴入账</div><div class="s">08-05 10:00 · 政府发放</div></div>
+              <div class="wc-amt up">+¥200.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#F472B6,#EC4899);">🎂</div>
+              <div class="wc-text"><div class="t">生日礼金(本月)</div><div class="s">08-07 14:00 · 民政局</div></div>
+              <div class="wc-amt up">+¥200.00</div>
+            </div>
+            <div class="wc-row">
+              <div class="wc-ico" style="background:linear-gradient(135deg,#06B6D4,#22D3EE);">🍲</div>
+              <div class="wc-text"><div class="t">助餐费用</div><div class="s">08-06 18:00 · 银发助餐</div></div>
+              <div class="wc-amt down">-¥150.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="walletPanel1" class="wallet-panel" style="display:none;">
+        <div class="section" style="padding-top:18px;">
+          <div class="wallet-card-2" style="text-align:center;">
+            <div style="font-size:32px;color:var(--info);margin-bottom:8px;">💊</div>
+            <div class="fs-13 c3">医保个人账户余额</div>
+            <div style="font-size:28px;font-weight:800;color:var(--info);margin:6px 0;">¥3,860<span style="font-size:14px;">.50</span></div>
+            <div class="fs-11 c3">本月已使用 ¥240.00 · 累计年度 ¥1,860</div>
+          </div>
+          <div class="wallet-card-2" style="margin-top:12px;">
+            <div class="wc-row"><div class="wc-ico" style="background:#DBEAFE;color:#2563EB;">🏥</div><div class="wc-text"><div class="t">鼓楼医院购药</div><div class="s">08-06 11:30 · 处方: 苯磺酸氨氯地平</div></div><div class="wc-amt down">-¥86.50</div></div>
+            <div class="wc-row"><div class="wc-ico" style="background:#DBEAFE;color:#2563EB;">🏥</div><div class="wc-text"><div class="t">省中医院挂号</div><div class="s">08-04 14:20 · 心血管科</div></div><div class="wc-amt down">-¥15.00</div></div>
+            <div class="wc-row"><div class="wc-ico" style="background:#DBEAFE;color:#2563EB;">🏥</div><div class="wc-text"><div class="t">社区医院购药</div><div class="s">08-02 09:50</div></div><div class="wc-amt down">-¥138.50</div></div>
+          </div>
+          <div class="wallet-card-2" style="margin-top:12px;text-align:center;">
+            <div class="fs-13 c3">医保个账使用范围</div>
+            <div class="row gap-6 mt-12" style="flex-wrap:wrap;justify-content:center;">
+              <span style="padding:6px 12px;background:#DBEAFE;color:#2563EB;border-radius:14px;font-size:11px;">定点零售药店</span>
+              <span style="padding:6px 12px;background:#DBEAFE;color:#2563EB;border-radius:14px;font-size:11px;">定点医疗机构</span>
+              <span style="padding:6px 12px;background:#DBEAFE;color:#2563EB;border-radius:14px;font-size:11px;">体检接种</span>
+              <span style="padding:6px 12px;background:#DBEAFE;color:#2563EB;border-radius:14px;font-size:11px;">共享家人</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="walletPanel2" class="wallet-panel" style="display:none;">
+        <div class="section" style="padding-top:18px;">
+          <div class="wallet-card-2" style="text-align:center;">
+            <div style="font-size:32px;color:var(--gold);margin-bottom:8px;">🪙</div>
+            <div class="fs-13 c3">养老金账户余额</div>
+            <div style="font-size:28px;font-weight:800;color:var(--gold);margin:6px 0;">¥48,260<span style="font-size:14px;">.00</span></div>
+            <div class="fs-11 c3">下月发放 2026-09-15 09:00</div>
+          </div>
+          <div style="margin:14px 0;display:flex;justify-content:space-around;" class="wallet-card-2">
+            <div class="text-c"><div class="fw-8 fs-15 c1">¥4,200</div><div class="fs-11 c3">本月发放</div></div>
+            <div class="text-c"><div class="fw-8 fs-15">¥156,800</div><div class="fs-11 c3">年度累计</div></div>
+            <div class="text-c"><div class="fw-8 fs-15">36个月</div><div class="fs-11 c3">连续发放</div></div>
+          </div>
+          <div class="wallet-card-2" style="margin-top:12px;">
+            <div class="wc-row"><div class="wc-ico" style="background:#FEF3C7;color:#D97706;">🪙</div><div class="wc-text"><div class="t">2026年8月养老金</div><div class="s">08-15 09:00 · 已到账</div></div><div class="wc-amt up">+¥4,200.00</div></div>
+            <div class="wc-row"><div class="wc-ico" style="background:#FEF3C7;color:#D97706;">🪙</div><div class="wc-text"><div class="t">2026年7月养老金</div><div class="s">07-15 09:00 · 已到账</div></div><div class="wc-amt up">+¥4,200.00</div></div>
+            <div class="wc-row"><div class="wc-ico" style="background:#FEF3C7;color:#D97706;">🪙</div><div class="wc-text"><div class="t">2026年6月养老金</div><div class="s">06-15 09:00 · 已到账</div></div><div class="wc-amt up">+¥4,200.00</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 4. 理财中心 ========== -->
+    <div class="page" id="page-wealth">
+      <div class="topbar">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;">‹</button>
+          <div class="brand-name">理财中心</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">📋</div>
+        </div>
+      </div>
+
+      <div class="wealth-hero">
+        <div class="row between">
+          <div class="fs-13" style="opacity:.9;">理财持仓总额</div>
+          <div style="font-size:11px;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:8px;backdrop-filter:blur(10px);">稳健型 R2</div>
+        </div>
+        <div style="font-size:32px;font-weight:800;margin-top:6px;">¥50,000<span style="font-size:18px;">.00</span></div>
+        <div style="font-size:12px;opacity:.88;margin-top:4px;">累计收益 +¥1,260.50 (本月 +¥108.20)</div>
+        <div class="wealth-summary">
+          <div class="wealth-sum-cell"><div class="v">¥50,000<small>.00</small></div><div class="l">持仓本金</div></div>
+          <div class="wealth-sum-cell"><div class="v" style="color:#FBBF24;">+¥1,260<small>.50</small></div><div class="l">累计收益</div></div>
+        </div>
+      </div>
+
+      <div class="wealth-tabs">
+        <div class="wt active" onclick="switchWealthTab(0)">推荐理财</div>
+        <div class="wt" onclick="switchWealthTab(1)">我的持仓</div>
+        <div class="wt" onclick="switchWealthTab(2)">收益明细</div>
+      </div>
+
+      <div id="wealthPanel0" class="wealth-panel">
+        <div class="section" style="padding-top:14px;">
+          <!-- 产品1 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心稳健1号</div>
+              <div class="pc-tag">稳健</div>
+            </div>
+            <div class="pc-rate">2.8<sup>%</sup><small style="font-size:13px;font-weight:500;"> /年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">30天</div><div class="l">理财期限</div></div>
+              <div class="pm"><div class="v">¥1000起</div><div class="l">起购金额</div></div>
+              <div class="pm"><div class="v">R2</div><div class="l">风险等级</div></div>
+            </div>
+            <div style="margin-top:10px;padding:8px 10px;background:#FFF7ED;border-radius:8px;font-size:11px;color:#92400E;">🏆 老人专享 · 已限购 ¥50,000</div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <!-- 产品2 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心养老货币基金</div>
+              <div class="pc-tag safe">低风险</div>
+            </div>
+            <div class="pc-rate">2.3<sup>%</sup><small style="font-size:13px;font-weight:500;"> /7日年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">随存随取</div><div class="l">流动性</div></div>
+              <div class="pm"><div class="v">¥100起</div><div class="l">起购金额</div></div>
+              <div class="pm"><div class="v">R1</div><div class="l">风险等级</div></div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <!-- 产品3 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心定期存款(3年)</div>
+              <div class="pc-tag safe">保本</div>
+            </div>
+            <div class="pc-rate">2.5<sup>%</sup><small style="font-size:13px;font-weight:500;"> /年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">3年</div><div class="l">存期</div></div>
+              <div class="pm"><div class="v">¥50起</div><div class="l">起存金额</div></div>
+              <div class="pm"><div class="v">保本</div><div class="l">存款保险</div></div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <!-- 产品4 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心保险理财</div>
+              <div class="pc-tag">稳健</div>
+            </div>
+            <div class="pc-rate">3.5<sup>%</sup><small style="font-size:13px;font-weight:500;"> /年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">365天</div><div class="l">理财期限</div></div>
+              <div class="pm"><div class="v">¥10000起</div><div class="l">起购金额</div></div>
+              <div class="pm"><div class="v">R2</div><div class="l">风险等级</div></div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <!-- 产品5 国债逆回购 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">国债逆回购(7天)</div>
+              <div class="pc-tag safe">保本</div>
+            </div>
+            <div class="pc-rate">2.4<sup>%</sup><small style="font-size:13px;font-weight:500;"> /年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">7天</div><div class="l">期限</div></div>
+              <div class="pm"><div class="v">¥1000起</div><div class="l">起购金额</div></div>
+              <div class="pm"><div class="v">国债</div><div class="l">国家信用</div></div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <!-- 产品6 结构性存款 -->
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心结构性存款</div>
+              <div class="pc-tag safe">保本</div>
+            </div>
+            <div class="pc-rate">3.0<sup>%</sup><small style="font-size:13px;font-weight:500;"> /年化</small></div>
+            <div class="pc-meta">
+              <div class="pm"><div class="v">6个月</div><div class="l">存期</div></div>
+              <div class="pm"><div class="v">¥10000起</div><div class="l">起存金额</div></div>
+              <div class="pm"><div class="v">保本</div><div class="l">存款保险</div></div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost" onclick="showModal('detail-prod')">产品详情</button>
+              <button class="btn pri" onclick="showModal('risk')">立即购买</button>
+            </div>
+          </div>
+
+          <div class="notice" style="margin:0;">
+            <span class="notice-tag">提示</span>
+            <span class="notice-text">理财有风险，投资需谨慎 · 老人专享 R1-R3</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="wealthPanel1" class="wealth-panel" style="display:none;">
+        <div class="section" style="padding-top:14px;">
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心稳健1号</div>
+              <div class="pc-tag safe">持有中</div>
+            </div>
+            <div class="row between mt-12">
+              <div>
+                <div class="fs-11 c3">持有本金</div>
+                <div class="fw-7 fs-15" style="margin-top:2px;">¥30,000.00</div>
+              </div>
+              <div>
+                <div class="fs-11 c3">持有收益</div>
+                <div class="fw-7 fs-15 c1" style="margin-top:2px;">+¥860.00</div>
+              </div>
+              <div>
+                <div class="fs-11 c3">到期日</div>
+                <div class="fw-7 fs-13" style="margin-top:2px;">2026-09-08</div>
+              </div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost">查看详情</button>
+              <button class="btn pri">继续购买</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="pc-head">
+              <div class="pc-name">苏心养老货币基金</div>
+              <div class="pc-tag safe">持有中</div>
+            </div>
+            <div class="row between mt-12">
+              <div>
+                <div class="fs-11 c3">持有本金</div>
+                <div class="fw-7 fs-15" style="margin-top:2px;">¥20,000.00</div>
+              </div>
+              <div>
+                <div class="fs-11 c3">持有收益</div>
+                <div class="fw-7 fs-15 c1" style="margin-top:2px;">+¥400.50</div>
+              </div>
+              <div>
+                <div class="fs-11 c3">类型</div>
+                <div class="fw-7 fs-13" style="margin-top:2px;">随时取</div>
+              </div>
+            </div>
+            <div class="pc-foot">
+              <button class="btn ghost">查看详情</button>
+              <button class="btn pri">继续购买</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="wealthPanel2" class="wealth-panel" style="display:none;">
+        <div class="section" style="padding-top:14px;">
+          <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+            <div class="row between mb-12"><div class="fs-13 fw-7">本月收益明细</div><span class="c1 fw-8 fs-15">+¥108.20</span></div>
+            <div class="rule-list">
+              <div class="rule-item"><span class="r-l">08-08 苏心稳健1号</span><span style="color:var(--success);">+¥23.01</span></div>
+              <div class="rule-item"><span class="r-l">08-07 苏心稳健1号</span><span style="color:var(--success);">+¥23.01</span></div>
+              <div class="rule-item"><span class="r-l">08-06 苏心稳健1号</span><span style="color:var(--success);">+¥22.99</span></div>
+              <div class="rule-item"><span class="r-l">08-05 苏心养老货币</span><span style="color:var(--success);">+¥1.58</span></div>
+              <div class="rule-item"><span class="r-l">08-04 苏心养老货币</span><span style="color:var(--success);">+¥1.58</span></div>
+              <div class="rule-item"><span class="r-l">08-03 苏心养老货币</span><span style="color:var(--success);">+¥1.58</span></div>
+              <div class="rule-item"><span class="r-l">08-02 苏心养老货币</span><span style="color:var(--success);">+¥1.58</span></div>
+              <div class="rule-item"><span class="r-l">08-01 苏心养老货币</span><span style="color:var(--success);">+¥1.58</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 5. 服务市场 ========== -->
+    <div class="page" id="page-market">
+      <div class="topbar">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;">‹</button>
+          <div class="brand-name">服务市场</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">🔍</div>
+          <div class="icon-btn">📍</div>
+        </div>
+      </div>
+
+      <div class="market-tabs">
+        <div class="mt active" onclick="switchMarket(0)">居家上门</div>
+        <div class="mt" onclick="switchMarket(1)">社区养老</div>
+        <div class="mt" onclick="switchMarket(2)">机构养老</div>
+        <div class="mt" onclick="switchMarket(3)">适老化产品</div>
+      </div>
+
+      <div class="market-filters">
+        <div class="mf on">全部</div>
+        <div class="mf">距离最近</div>
+        <div class="mf">评分最高</div>
+        <div class="mf">政府认证</div>
+        <div class="mf">数币签约</div>
+        <div class="mf">失能专区</div>
+      </div>
+
+      <div id="marketPanel0" class="market-panel">
+        <div style="padding:0 16px 8px;font-size:12px;color:#6B7280;">已为您筛选 <strong style="color:var(--primary);">5家</strong> 签约数币的服务商 (按距离排序)</div>
+
+        <!-- 服务商1 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏥</div>
+            <div class="pc-info">
+              <div class="pc-title">南京鼓楼护理站 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.9</span>
+                <span>·</span>
+                <span>1.2km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥120</div>
+              <div class="u">/次起</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>老人助浴</span><span class="pn">¥200/次</span></div>
+            <div class="ps-item"><span>上门理发</span><span class="pn">¥50/次</span></div>
+            <div class="ps-item"><span>专业护理(失能)</span><span class="pn">¥150/次</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 服务商2 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏠</div>
+            <div class="pc-info">
+              <div class="pc-title">苏心家政服务中心 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.8</span>
+                <span>·</span>
+                <span>2.5km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥80</div>
+              <div class="u">/次起</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>家政保洁</span><span class="pn">¥80/次</span></div>
+            <div class="ps-item"><span>做饭送餐</span><span class="pn">¥25/餐</span></div>
+            <div class="ps-item"><span>陪同就医</span><span class="pn">¥150/次</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 服务商3 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">💊</div>
+            <div class="pc-info">
+              <div class="pc-title">金康护理院 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.7</span>
+                <span>·</span>
+                <span>3.8km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥150</div>
+              <div class="u">/次起</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>康复理疗</span><span class="pn">¥180/次</span></div>
+            <div class="ps-item"><span>中医推拿</span><span class="pn">¥120/次</span></div>
+            <div class="ps-item"><span>健康管理</span><span class="pn">¥200/月</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 服务商4 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🍲</div>
+            <div class="pc-info">
+              <div class="pc-title">银发助餐中心 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.6</span>
+                <span>·</span>
+                <span>1.5km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥20</div>
+              <div class="u">/餐</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>老人营养餐</span><span class="pn">¥20/餐</span></div>
+            <div class="ps-item"><span>糖尿病餐</span><span class="pn">¥25/餐</span></div>
+            <div class="ps-item"><span>送餐上门</span><span class="pn">+¥5</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 服务商5 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🚐</div>
+            <div class="pc-info">
+              <div class="pc-title">助行·陪同出行 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.8</span>
+                <span>·</span>
+                <span>0.8km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥100</div>
+              <div class="u">/次起</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>陪同就医</span><span class="pn">¥150/次</span></div>
+            <div class="ps-item"><span>代办缴费</span><span class="pn">¥80/次</span></div>
+            <div class="ps-item"><span>出行陪伴</span><span class="pn">¥100/次</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 服务商6 -->
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🩺</div>
+            <div class="pc-info">
+              <div class="pc-title">安康居家医疗 <span class="v">签约</span></div>
+              <div class="pc-meta">
+                <span class="star">★ 4.9</span>
+                <span>·</span>
+                <span>2.0km</span>
+                <span>·</span>
+                <span class="sign">数币签约 ✓</span>
+              </div>
+            </div>
+            <div class="pc-price">
+              <div class="p">¥200</div>
+              <div class="u">/次起</div>
+            </div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>上门问诊</span><span class="pn">¥200/次</span></div>
+            <div class="ps-item"><span>基础体检</span><span class="pn">¥150/次</span></div>
+            <div class="ps-item"><span>慢病管理</span><span class="pn">¥800/月</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out" onclick="showModal('detail')">查看详情</button>
+            <button class="btn pri" onclick="showModal('order')">立即点单</button>
+          </div>
+        </div>
+
+        <!-- 智能合约标识 -->
+        <div style="margin:0 16px 16px;padding:14px;background:linear-gradient(135deg,#EDE9FE,#FCE7F3);border-radius:12px;display:flex;align-items:center;gap:10px;">
+          <div style="font-size:22px;">🤝</div>
+          <div style="flex:1;font-size:12px;color:#4B5563;">
+            <strong style="color:#7C3AED;">智能合约保障</strong><br>
+            服务完成后自动结算，消费券优先扣减，纠纷一键仲裁，全程链上存证
+          </div>
+        </div>
+      </div>
+
+      <!-- 社区养老 -->
+      <div id="marketPanel1" class="market-panel" style="display:none;">
+        <div style="padding:0 16px 8px;font-size:12px;color:#6B7280;">已为您筛选 <strong style="color:var(--primary);">6家</strong> 社区综合体 (距离最近)</div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏘️</div>
+            <div class="pc-info">
+              <div class="pc-title">苏州姑苏区嵌入式综合体 <span class="v">签约</span></div>
+              <div class="pc-meta"><span class="star">★ 4.9</span><span>·</span><span>医养结合示范</span><span>·</span><span class="sign">数币签约 ✓</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥2,800</div><div class="u">/月起</div></div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>日间照料</span><span class="pn">¥80/天</span></div>
+            <div class="ps-item"><span>助餐</span><span class="pn">¥20/餐</span></div>
+            <div class="ps-item"><span>康复理疗</span><span class="pn">¥150/次</span></div>
+            <div class="ps-item"><span>文娱活动</span><span class="pn">免费</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即点单</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏘️</div>
+            <div class="pc-info">
+              <div class="pc-title">南京玄武区颐养中心 <span class="v">签约</span></div>
+              <div class="pc-meta"><span class="star">★ 4.8</span><span>·</span><span>南京标杆</span><span>·</span><span class="sign">数币签约 ✓</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥3,500</div><div class="u">/月起</div></div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>日间照料</span><span class="pn">¥100/天</span></div>
+            <div class="ps-item"><span>助餐</span><span class="pn">¥25/餐</span></div>
+            <div class="ps-item"><span>康复理疗</span><span class="pn">¥180/次</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即点单</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏘️</div>
+            <div class="pc-info">
+              <div class="pc-title">无锡梁溪区综合体 <span class="v">签约</span></div>
+              <div class="pc-meta"><span class="star">★ 4.7</span><span>·</span><span>医养结合</span><span>·</span><span class="sign">数币签约 ✓</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥2,500</div><div class="u">/月起</div></div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>日间照料</span><span class="pn">¥70/天</span></div>
+            <div class="ps-item"><span>助餐</span><span class="pn">¥18/餐</span></div>
+            <div class="ps-item"><span>中医理疗</span><span class="pn">¥120/次</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即点单</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 机构养老 -->
+      <div id="marketPanel2" class="market-panel" style="display:none;">
+        <div style="padding:0 16px 8px;font-size:12px;color:#6B7280;">已为您筛选 <strong style="color:var(--primary);">3家</strong> 星级养老机构</div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏥</div>
+            <div class="pc-info">
+              <div class="pc-title">南京点将台社会福利院 <span class="v">签约</span></div>
+              <div class="pc-meta"><span class="star">★ 5.0</span><span>·</span><span>5A级</span><span>·</span><span class="sign">数币签约 ✓</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥4,800</div><div class="u">/月起</div></div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>单人间</span><span class="pn">¥4,800/月</span></div>
+            <div class="ps-item"><span>双人间</span><span class="pn">¥3,800/月</span></div>
+            <div class="ps-item"><span>失能专区</span><span class="pn">¥6,800/月</span></div>
+            <div class="ps-item"><span>押金</span><span class="pn">¥18,000</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即预约</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo">🏥</div>
+            <div class="pc-info">
+              <div class="pc-title">苏州怡养老年公寓 <span class="v">签约</span></div>
+              <div class="pc-meta"><span class="star">★ 4.9</span><span>·</span><span>4A级</span><span>·</span><span class="sign">数币签约 ✓</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥4,500</div><div class="u">/月起</div></div>
+          </div>
+          <div class="pc-srv">
+            <div class="ps-item"><span>单人间</span><span class="pn">¥4,500/月</span></div>
+            <div class="ps-item"><span>护理专区</span><span class="pn">¥6,500/月</span></div>
+            <div class="ps-item"><span>押金</span><span class="pn">¥15,000</span></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即预约</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 适老化产品 -->
+      <div id="marketPanel3" class="market-panel" style="display:none;">
+        <div style="padding:0 16px 8px;font-size:12px;color:#6B7280;">已为您筛选 <strong style="color:var(--primary);">6款</strong> 政府补贴产品</div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo" style="background:linear-gradient(135deg,#FED7AA,#FEF3C7);">🛏️</div>
+            <div class="pc-info">
+              <div class="pc-title">护理床·电动升降 <span class="v">补贴30%</span></div>
+              <div class="pc-meta"><span class="star">★ 4.9</span><span>·</span><span>月销 280</span><span>·</span><span class="sign">政府认证</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥2,899</div><div class="u" style="text-decoration:line-through;">¥4,199</div></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即购买</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);">⌚</div>
+            <div class="pc-info">
+              <div class="pc-title">智能跌倒监测手环 <span class="v">补贴20%</span></div>
+              <div class="pc-meta"><span class="star">★ 4.8</span><span>·</span><span>月销 1280</span><span>·</span><span class="sign">SOS一键</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥599</div><div class="u" style="text-decoration:line-through;">¥749</div></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即购买</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);">🚽</div>
+            <div class="pc-info">
+              <div class="pc-title">智能马桶·适老款 <span class="v">补贴25%</span></div>
+              <div class="pc-meta"><span class="star">★ 4.7</span><span>·</span><span>月销 380</span><span>·</span><span class="sign">政府认证</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥1,899</div><div class="u" style="text-decoration:line-through;">¥2,499</div></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即购买</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo" style="background:linear-gradient(135deg,#FCE7F3,#FBCFE8);">🛁</div>
+            <div class="pc-info">
+              <div class="pc-title">助浴椅·防滑 <span class="v">补贴15%</span></div>
+              <div class="pc-meta"><span class="star">★ 4.8</span><span>·</span><span>月销 156</span><span>·</span><span class="sign">适老化</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥289</div><div class="u" style="text-decoration:line-through;">¥339</div></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即购买</button>
+          </div>
+        </div>
+        <div class="provider-card">
+          <div class="pc-top">
+            <div class="pc-logo" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);">👟</div>
+            <div class="pc-info">
+              <div class="pc-title">防滑老人鞋 <span class="v">补贴10%</span></div>
+              <div class="pc-meta"><span class="star">★ 4.9</span><span>·</span><span>月销 980</span><span>·</span><span class="sign">适老化</span></div>
+            </div>
+            <div class="pc-price"><div class="p">¥198</div><div class="u" style="text-decoration:line-through;">¥219</div></div>
+          </div>
+          <div class="pc-foot">
+            <button class="btn out">查看详情</button>
+            <button class="btn pri">立即购买</button>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 6. 订单 ========== -->
+    <div class="page" id="page-orders">
+      <div class="topbar with-bg color" style="background:linear-gradient(135deg,#EA580C 0%,#F59E0B 100%);">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;color:#fff;">‹</button>
+          <div class="brand-name" style="color:#fff;">我的订单</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn" style="background:rgba(255,255,255,.2);color:#fff;">🔍</div>
+        </div>
+      </div>
+
+      <div class="order-tabs">
+        <div class="ot active" onclick="switchOrderTab(0)">进行中(2)</div>
+        <div class="ot" onclick="switchOrderTab(1)">待评价(1)</div>
+        <div class="ot" onclick="switchOrderTab(2)">已完成</div>
+        <div class="ot" onclick="switchOrderTab(3)">退款/维权</div>
+      </div>
+
+      <div id="orderPanel0" class="order-panel">
+        <div class="section" style="padding-top:12px;">
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">南京鼓楼护理站<span class="badge">实时定位</span></div>
+              <div class="status go">服务进行中</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">💆</div>
+              <div class="oc-info">
+                <div class="t">专业护理(失能)</div>
+                <div class="s">服务人员: 李阿姨 · 工号 N003<br>预约: 今天 14:00-16:00</div>
+              </div>
+            </div>
+            <div style="padding:10px;background:#FEF3C7;border-radius:8px;font-size:11px;color:#92400E;">
+              ⏱️ 预计 1 小时后完成 · 服务人员距您 380 米
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥150.00 <span class="fs-11 c3" style="text-decoration:line-through;font-weight:400;">¥200</span></div>
+              <div class="btns">
+                <button class="btn ghost">联系TA</button>
+                <button class="btn out" onclick="showModal('evidence')">查看证据</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">苏心家政服务中心</div>
+              <div class="status go">待服务开始</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">🍳</div>
+              <div class="oc-info">
+                <div class="t">做饭送餐 · 5次卡</div>
+                <div class="s">服务人员: 张师傅 · 工号 N018<br>下单时间: 08-08 10:20</div>
+              </div>
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥125.00</div>
+              <div class="btns">
+                <button class="btn ghost">取消订单</button>
+                <button class="btn out">修改时间</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top:18px;"><h3>服务证据 (本次)</h3></div>
+          <div class="bg-w" style="border-radius:14px;padding:14px;margin:0 0 14px;box-shadow:var(--shadow);">
+            <div class="row gap-12" style="align-items:center;">
+              <div style="width:40px;height:40px;border-radius:10px;background:#D1FAE5;color:var(--success);display:flex;align-items:center;justify-content:center;font-size:18px;">📍</div>
+              <div style="flex:1;">
+                <div class="fs-13 fw-6">GPS定位</div>
+                <div class="fs-11 c3">南京市鼓楼区 XX路128号 · 误差<5米</div>
+              </div>
+              <span class="fs-11" style="color:var(--success);font-weight:600;">✓ 已记录</span>
+            </div>
+            <hr style="margin:10px 0;border:none;border-top:1px dashed var(--border);">
+            <div class="row gap-12" style="align-items:center;">
+              <div style="width:40px;height:40px;border-radius:10px;background:#DBEAFE;color:var(--info);display:flex;align-items:center;justify-content:center;font-size:18px;">🎤</div>
+              <div style="flex:1;">
+                <div class="fs-13 fw-6">服务录音</div>
+                <div class="fs-11 c3">全过程录音 · 时长 58分</div>
+              </div>
+              <span class="fs-11" style="color:var(--success);font-weight:600;">✓ 已存储</span>
+            </div>
+            <hr style="margin:10px 0;border:none;border-top:1px dashed var(--border);">
+            <div class="row gap-12" style="align-items:center;">
+              <div style="width:40px;height:40px;border-radius:10px;background:#FEF3C7;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;">✍️</div>
+              <div style="flex:1;">
+                <div class="fs-13 fw-6">电子签名</div>
+                <div class="fs-11 c3">家属(女儿张女士) 已电子签收</div>
+              </div>
+              <span class="fs-11" style="color:var(--success);font-weight:600;">✓ 已签收</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="orderPanel1" class="order-panel" style="display:none;">
+        <div class="section" style="padding-top:12px;">
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">银发助餐中心</div>
+              <div class="status ok">待评价</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">🍲</div>
+              <div class="oc-info">
+                <div class="t">老人营养餐 · 月度卡</div>
+                <div class="s">已完成 30 次送餐 · 7月<br>订单号: DD202607-0856</div>
+              </div>
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥600.00</div>
+              <div class="btns">
+                <button class="btn ghost">查看详情</button>
+                <button class="btn pri" onclick="showModal('evaluate');toast('感谢您的评价')">立即评价</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="orderPanel2" class="order-panel" style="display:none;">
+        <div class="section" style="padding-top:12px;">
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">南京鼓楼护理站</div>
+              <div class="status do">已完成</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">💆</div>
+              <div class="oc-info">
+                <div class="t">上门助浴 · 4次卡</div>
+                <div class="s">完成日期: 2026-07-28<br>订单号: DD202607-0756</div>
+              </div>
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥800.00</div>
+              <div class="btns">
+                <button class="btn ghost">再次点单</button>
+                <button class="btn out">查看详情</button>
+              </div>
+            </div>
+          </div>
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">金康护理院</div>
+              <div class="status do">已完成</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">💊</div>
+              <div class="oc-info">
+                <div class="t">康复理疗 · 月度</div>
+                <div class="s">完成日期: 2026-07-20<br>订单号: DD202607-0632</div>
+              </div>
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥3,600.00</div>
+              <div class="btns">
+                <button class="btn ghost">再次点单</button>
+                <button class="btn out">查看详情</button>
+              </div>
+            </div>
+          </div>
+          <div class="order-card">
+            <div class="oc-top">
+              <div class="pname">苏心家政服务中心</div>
+              <div class="status do">已完成</div>
+            </div>
+            <div class="oc-mid">
+              <div class="oc-img">🧹</div>
+              <div class="oc-info">
+                <div class="t">家政保洁 · 每周一次</div>
+                <div class="s">完成日期: 2026-07-12<br>订单号: DD202607-0518</div>
+              </div>
+            </div>
+            <div class="oc-foot">
+              <div class="price">¥320.00</div>
+              <div class="btns">
+                <button class="btn ghost">再次点单</button>
+                <button class="btn out">查看详情</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="orderPanel3" class="order-panel" style="display:none;">
+        <div class="section" style="padding-top:12px;">
+          <div class="empty">
+            <div class="e-ico">🛡️</div>
+            <div>暂无退款/维权记录</div>
+            <div class="fs-11 c4" style="margin-top:4px;">平台智能合约已为您守护每一笔交易</div>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 7. 预付费监管 ========== -->
+    <div class="page" id="page-escrow">
+      <div class="topbar with-bg color" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;color:#fff;">‹</button>
+          <div class="brand-name" style="color:#fff;">预付费监管</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn" style="background:rgba(255,255,255,.2);color:#fff;">📋</div>
+        </div>
+      </div>
+
+      <div class="escrow-hero">
+        <div class="escrow-info">
+          <div class="ei-ico">🤝</div>
+          <div class="ei-text">
+            <div class="t">智能合约 · 预付费监管</div>
+            <div class="s">链上托管 · 按次释放 · 一键仲裁</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="escrow-summary">
+        <div class="es"><div class="v">¥18,000</div><div class="l">押金账户</div></div>
+        <div class="es"><div class="v">¥12,000</div><div class="l">会员费账户</div></div>
+      </div>
+
+      <!-- 监管账户1 -->
+      <div class="section" style="padding-top:0;">
+        <div class="escrow-card">
+          <div class="ec-title">
+            <span>南京点将台社会福利院 · 押金</span>
+            <span class="badge">合约中</span>
+          </div>
+          <div class="ec-progress">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <div class="ep-dot done">✓</div>
+              <div class="ep-text">签约<small>2026-06-15</small></div>
+              <div class="ep-line done"></div>
+              <div class="ep-dot done">✓</div>
+              <div class="ep-text">支付<small>¥18,000</small></div>
+              <div class="ep-line done"></div>
+              <div class="ep-dot cur">●</div>
+              <div class="ep-text">按月释放<small>进行中</small></div>
+              <div class="ep-line"></div>
+              <div class="ep-dot">●</div>
+              <div class="ep-text">结算<small>2027-06-14</small></div>
+            </div>
+          </div>
+          <div class="rule-list">
+            <div class="rule-item"><span class="r-l">合约编号</span><span>SXYL20260615-001</span></div>
+            <div class="rule-item"><span class="r-l">已托管</span><span style="color:var(--primary);font-weight:700;">¥18,000.00</span></div>
+            <div class="rule-item"><span class="r-l">已释放</span><span>¥6,000.00 (3个月)</span></div>
+            <div class="rule-item"><span class="r-l">剩余托管</span><span>¥12,000.00</span></div>
+            <div class="rule-item"><span class="r-l">释放规则</span><span>按月释放 ¥1,500/月</span></div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;">
+            <button class="btn-ghost" style="flex:1;">查看合约</button>
+            <button class="btn-ghost" style="flex:1;" onclick="toast('已发起退款申请，预计3个工作日')">申请退款</button>
+          </div>
+        </div>
+
+        <!-- 监管账户2 -->
+        <div class="escrow-card">
+          <div class="ec-title">
+            <span>苏州姑苏区嵌入式综合体 · 会员费</span>
+            <span class="badge">按次</span>
+          </div>
+          <div class="ec-progress">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+              <div class="ep-dot done">✓</div>
+              <div class="ep-text">签约<small>2026-07-01</small></div>
+              <div class="ep-line done"></div>
+              <div class="ep-dot done">✓</div>
+              <div class="ep-text">支付<small>¥12,000</small></div>
+              <div class="ep-line done"></div>
+              <div class="ep-dot cur">●</div>
+              <div class="ep-text">按次释放<small>已用4次</small></div>
+              <div class="ep-line"></div>
+              <div class="ep-dot">●</div>
+              <div class="ep-text">清零<small>2027-06-30</small></div>
+            </div>
+          </div>
+          <div class="rule-list">
+            <div class="rule-item"><span class="r-l">合约编号</span><span>SXYL20260701-008</span></div>
+            <div class="rule-item"><span class="r-l">已托管</span><span style="color:var(--primary);font-weight:700;">¥12,000.00</span></div>
+            <div class="rule-item"><span class="r-l">已用服务</span><span>4次 / 共36次</span></div>
+            <div class="rule-item"><span class="r-l">释放规则</span><span>按次释放 ¥333/次</span></div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;">
+            <button class="btn-ghost" style="flex:1;">查看合约</button>
+            <button class="btn-ghost" style="flex:1;">服务记录</button>
+          </div>
+        </div>
+
+        <!-- 监管规则说明 -->
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);margin:0 16px 12px;">
+          <div class="fs-14 fw-7" style="margin-bottom:10px;">📜 智能合约监管规则</div>
+          <div class="rule-list">
+            <div class="rule-item"><span class="r-l">1. 冻结金额</span><span style="color:var(--success);">链上托管</span></div>
+            <div class="rule-item"><span class="r-l">2. 释放规则</span><span>按次 / 按月 / 按进度</span></div>
+            <div class="rule-item"><span class="r-l">3. 退款保障</span><span style="color:var(--success);">30天无理由退款</span></div>
+            <div class="rule-item"><span class="r-l">4. 异常预警</span><span>服务商异常自动报警</span></div>
+            <div class="rule-item"><span class="r-l">5. 证据存证</span><span>区块链+司法存证</span></div>
+            <div class="rule-item"><span class="r-l">6. 司法仲裁</span><span>一键申请在线仲裁</span></div>
+          </div>
+        </div>
+
+        <!-- 异常预警 -->
+        <div style="margin:0 16px 12px;padding:10px 14px;background:#FEF3C7;border-radius:10px;font-size:12px;color:#92400E;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:16px;">⚠️</span>
+          <span>苏州姑苏综合体最近30天服务投诉1次，请关注服务质量</span>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 8. 亲情账户 ========== -->
+    <div class="page" id="page-family">
+      <div class="topbar with-bg color" style="background:linear-gradient(135deg,#EC4899,#F472B6);">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;color:#fff;">‹</button>
+          <div class="brand-name" style="color:#fff;">亲情账户</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn" style="background:rgba(255,255,255,.2);color:#fff;">➕</div>
+        </div>
+      </div>
+
+      <div class="family-hero">
+        <div class="family-info">
+          <div class="fi-ico">👨‍👩‍👧</div>
+          <div class="fi-text">
+            <div class="t">亲情守护 · 远程关怀</div>
+            <div class="s">已绑定2位家属 · 您是3位家属的守护者</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="family-tabs">
+        <div class="ft active" onclick="switchFamilyTab(0)">父母</div>
+        <div class="ft" onclick="switchFamilyTab(1)">配偶</div>
+        <div class="ft" onclick="switchFamilyTab(2)">其他</div>
+      </div>
+
+      <!-- 守护统计 -->
+      <div class="section" style="padding-top:14px;">
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);background:linear-gradient(135deg,#FCE7F3,#FFF7ED);">
+          <div class="fs-13 fw-7 mb-12">📊 守护统计(本月)</div>
+          <div class="row" style="justify-content:space-between;">
+            <div class="text-c">
+              <div class="c1 fw-8 fs-18">¥550</div>
+              <div class="fs-10 c3 mt-4">代充值总额</div>
+            </div>
+            <div class="text-c">
+              <div class="c1 fw-8 fs-18">5</div>
+              <div class="fs-10 c3 mt-4">代点单次数</div>
+            </div>
+            <div class="text-c">
+              <div class="c1 fw-8 fs-18">28</div>
+              <div class="fs-10 c3 mt-4">健康提醒</div>
+            </div>
+            <div class="text-c">
+              <div class="c1 fw-8 fs-18">3</div>
+              <div class="fs-10 c3 mt-4">紧急联系</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 家属1 -->
+      <div class="section" style="padding-top:0;">
+        <div class="family-card">
+          <div class="fc-head">
+            <div class="fc-avatar">父</div>
+            <div class="fc-info">
+              <div class="n">王大爷 (父) <span class="tag">重点关注</span></div>
+              <div class="s">78岁 · 南京鼓楼 · 慢病管理</div>
+            </div>
+          </div>
+          <div class="fc-stats">
+            <div class="fs"><div class="v">¥350</div><div class="l">本月消费券</div></div>
+            <div class="fs"><div class="v">3</div><div class="l">服务订单</div></div>
+            <div class="fs"><div class="v">12</div><div class="l">健康提醒</div></div>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:#6B7280;line-height:1.8;">
+            <div style="padding:4px 0;">📍 最后位置: 南京市鼓楼区XX路128号</div>
+            <div style="padding:4px 0;">❤️ 心率 76 bpm (正常) · 血压 138/85 (偏高)</div>
+            <div style="padding:4px 0;">💊 服药提醒: 已完成本周7/7</div>
+            <div style="padding:4px 0;">🚶 步数 1860步 (今日)</div>
+          </div>
+          <div class="fc-actions">
+            <button class="btn out" onclick="toast('已发起远程充值 ¥500')">💰 远程充值</button>
+            <button class="btn out" onclick="toast('查看消费详情')">📊 消费详情</button>
+            <button class="btn pri" onclick="toast('正在拨打紧急联系人')">📞 紧急联系</button>
+          </div>
+        </div>
+
+        <!-- 家属2 -->
+        <div class="family-card">
+          <div class="fc-head">
+            <div class="fc-avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED);">母</div>
+            <div class="fc-info">
+              <div class="n">李奶奶 (母) <span class="tag" style="background:#D1FAE5;color:#059669;">健康</span></div>
+              <div class="s">75岁 · 苏州姑苏 · 活力老人</div>
+            </div>
+          </div>
+          <div class="fc-stats">
+            <div class="fs"><div class="v">¥200</div><div class="l">本月消费券</div></div>
+            <div class="fs"><div class="v">1</div><div class="l">服务订单</div></div>
+            <div class="fs"><div class="v">5</div><div class="l">活动参与</div></div>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:#6B7280;line-height:1.8;">
+            <div style="padding:4px 0;">📍 最后位置: 苏州姑苏区XX路56号</div>
+            <div style="padding:4px 0;">🎯 步数 3268步 (今日)</div>
+            <div style="padding:4px 0;">📅 下次体检: 2026-09-15</div>
+            <div style="padding:4px 0;">🎉 报名: 老年大学书画班</div>
+          </div>
+          <div class="fc-actions">
+            <button class="btn out" onclick="toast('已发起远程充值 ¥500')">💰 远程充值</button>
+            <button class="btn out" onclick="toast('查看消费详情')">📊 消费详情</button>
+            <button class="btn pri" onclick="toast('正在联系')">📞 联系TA</button>
+          </div>
+        </div>
+
+        <!-- 添加家属卡片 -->
+        <div class="bg-w" style="border-radius:14px;padding:30px;box-shadow:var(--shadow);text-align:center;border:2px dashed #FED7AA;">
+          <div style="font-size:36px;color:var(--primary);">➕</div>
+          <div class="fs-14 fw-7 mt-12">添加家属</div>
+          <div class="fs-11 c3 mt-8">最多绑定5位家属，共同守护</div>
+          <button class="btn-main btn-sm mt-12" onclick="toast('打开添加家属页面')">立即添加</button>
+        </div>
+
+        <!-- 健康提醒 -->
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="fs-14 fw-7" style="margin-bottom:10px;">🔔 健康提醒 (本月 12 条)</div>
+          <div style="padding:8px 0;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="fs-13">父亲 · 服药时间到</div>
+              <div class="fs-11 c3">2026-08-08 08:30 · 已读</div>
+            </div>
+            <span style="font-size:10px;background:#D1FAE5;color:#059669;padding:2px 6px;border-radius:3px;">✓</span>
+          </div>
+          <div style="padding:8px 0;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="fs-13">父亲 · 血压偏高</div>
+              <div class="fs-11 c3">2026-08-07 19:20</div>
+            </div>
+            <span style="font-size:10px;background:#FEF3C7;color:#D97706;padding:2px 6px;border-radius:3px;">注意</span>
+          </div>
+          <div style="padding:8px 0;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="fs-13">母亲 · 体检报告</div>
+              <div class="fs-11 c3">2026-08-05 15:00</div>
+            </div>
+            <span style="font-size:10px;background:#FEE2E2;color:#DC2626;padding:2px 6px;border-radius:3px;">待查看</span>
+          </div>
+          <div style="padding:8px 0;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div class="fs-13">父亲 · 出门提醒</div>
+              <div class="fs-11 c3">2026-08-04 07:00</div>
+            </div>
+            <span style="font-size:10px;background:#D1FAE5;color:#059669;padding:2px 6px;border-radius:3px;">已出门</span>
+          </div>
+        </div>
+
+        <!-- 我是家属 -->
+        <div class="section" style="padding-top:0;">
+          <div class="section-title"><h3>我是家属</h3></div>
+          <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+            <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);">
+              <div class="fc-avatar" style="width:36px;height:36px;font-size:14px;">张</div>
+              <div style="flex:1;">
+                <div class="fs-13 fw-6">张女士 (女) · 守护者</div>
+                <div class="fs-11 c3">守护母亲：李奶奶</div>
+              </div>
+              <span style="font-size:10px;background:#D1FAE5;color:#059669;padding:2px 6px;border-radius:3px;font-weight:600;">全部权限</span>
+            </div>
+            <div class="row gap-12" style="padding:8px 0;">
+              <div class="fc-avatar" style="width:36px;height:36px;font-size:14px;background:linear-gradient(135deg,#F59E0B,#EA580C);">李</div>
+              <div style="flex:1;">
+                <div class="fs-13 fw-6">李先生 (子) · 守护者</div>
+                <div class="fs-11 c3">守护父亲：王大爷</div>
+              </div>
+              <span style="font-size:10px;background:#FEF3C7;color:#D97706;padding:2px 6px;border-radius:3px;font-weight:600;">充值权限</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 9. 客服 ========== -->
+    <div class="page" id="page-service">
+      <div class="topbar">
+        <div class="row gap-8">
+          <button onclick="goPage('home')" style="font-size:20px;">‹</button>
+          <div class="brand-name">客服中心</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="icon-btn">📞</div>
+        </div>
+      </div>
+
+      <div class="cs-hero">
+        <h2>👋 您好，王金凤</h2>
+        <p>苏心养老客服 · 7×24小时为您服务<br>专属客服 · 5分钟响应</p>
+      </div>
+
+      <div class="cs-hot">
+        <div class="ch" onclick="showModal('chat')"><div class="ci">💬</div><div class="ct">在线客服</div><div class="cs">5分钟响应</div></div>
+        <div class="ch" onclick="showModal('video')"><div class="ci">📹</div><div class="ct">视频客服</div><div class="cs">老人专线</div></div>
+        <div class="ch" onclick="showModal('phone')"><div class="ci">📞</div><div class="ct">电话客服</div><div class="cs">400-7890588</div></div>
+      </div>
+
+      <!-- 1+3+N体系 -->
+      <div class="cs-system">
+        <div class="css-t">"1+3+N" 客服体系</div>
+        <div class="cs-system-grid">
+          <div class="g">
+            <div class="gi">1</div>
+            <div class="gt">总客服中心</div>
+            <div class="gs">省级统一</div>
+          </div>
+          <div class="g">
+            <div class="gi">+</div>
+            <div class="gt">3个专业线</div>
+            <div class="gs">消费/钱包/服务</div>
+          </div>
+          <div class="g">
+            <div class="gi">N</div>
+            <div class="gt">N个服务节点</div>
+            <div class="gs">13市+区县</div>
+          </div>
+        </div>
+        <div class="cs-system-n">
+          <div class="sn"><span class="v">2380+</span>签约服务商</div>
+          <div class="sn"><span class="v">13市</span>属地服务</div>
+          <div class="sn"><span class="v">98.6%</span>问题解决率</div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="cs-faq">
+        <div class="title">📚 常见问题</div>
+        <div class="faq-cat">
+          <div class="fc on" onclick="switchFaq(this,'消费券类(12)')">消费券类(12)</div>
+          <div class="fc" onclick="switchFaq(this,'钱包类(8)')">钱包类(8)</div>
+          <div class="fc" onclick="switchFaq(this,'理财类(5)')">理财类(5)</div>
+          <div class="fc" onclick="switchFaq(this,'服务类(15)')">服务类(15)</div>
+          <div class="fc" onclick="switchFaq(this,'预付费类(6)')">预付费类(6)</div>
+          <div class="fc" onclick="switchFaq(this,'亲情账户类(4)')">亲情账户类(4)</div>
+        </div>
+        <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:10px;">
+          <details style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <summary style="cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;">失能老人消费券如何领取？<span>+</span></summary>
+            <div style="font-size:12px;color:#6B7280;padding:8px 0;line-height:1.6;">
+              通过民政部门认证的失能老人，每月1号自动到账，无需主动领取。可在"消费券中心"查看明细。如未到账可拨打 400-7890588 联系客服。
+            </div>
+          </details>
+          <details style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <summary style="cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;">数币硬钱包如何激活？<span>+</span></summary>
+            <div style="font-size:12px;color:#6B7280;padding:8px 0;line-height:1.6;">
+              携带身份证至就近的工商银行/农业银行/建设银行/中国银行网点办理，首次补贴发放即激活成功。也可通过"我的-硬钱包领取"功能在线申领。
+            </div>
+          </details>
+          <details style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <summary style="cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;">智能合约预付费如何保障？<span>+</span></summary>
+            <div style="font-size:12px;color:#6B7280;padding:8px 0;line-height:1.6;">
+              平台采用区块链智能合约技术，资金链上托管，按服务进度释放，30天内可发起无理由退款，全程司法存证。如遇纠纷可一键申请在线仲裁。
+            </div>
+          </details>
+          <details style="padding:8px 0;border-bottom:1px dashed var(--border);">
+            <summary style="cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;">亲情账户最多绑定几人？<span>+</span></summary>
+            <div style="font-size:12px;color:#6B7280;padding:8px 0;line-height:1.6;">
+              单个老人账户最多可绑定5位家属，每位家属可设置不同的权限：仅查看 / 充值 / 消费代付 / 紧急联系 / 全部权限。
+            </div>
+          </details>
+          <details style="padding:8px 0;">
+            <summary style="cursor:pointer;font-size:13px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;">服务点单后多久响应？<span>+</span></summary>
+            <div style="font-size:12px;color:#6B7280;padding:8px 0;line-height:1.6;">
+              一般情况下15分钟内响应，紧急服务(如失能老人护理)5分钟内响应。如超时未响应，平台将自动推荐其他服务商，并补偿消费券。
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- 客服评价 -->
+      <div class="bg-w" style="margin:0 16px 14px;border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+        <div class="fs-13 fw-7 mb-12">📞 客服联系方式</div>
+        <div class="rule-list">
+          <div class="rule-item"><span class="r-l">客服热线</span><span style="color:var(--primary);font-weight:700;">400-7890588</span></div>
+          <div class="rule-item"><span class="r-l">投诉热线</span><span>025-12345 转 8</span></div>
+          <div class="rule-item"><span class="r-l">紧急救助</span><span style="color:var(--danger);font-weight:700;">110 联动</span></div>
+          <div class="rule-item"><span class="r-l">微信客服</span><span>suxinyanglao</span></div>
+          <div class="rule-item"><span class="r-l">邮箱</span><span>service@suxin.cn</span></div>
+        </div>
+      </div>
+
+      <!-- 投诉 -->
+      <div style="margin:0 16px 16px;padding:14px;background:#FEE2E2;border-radius:12px;display:flex;align-items:center;gap:10px;">
+        <div style="font-size:24px;">⚠️</div>
+        <div style="flex:1;">
+          <div class="fs-13 fw-7" style="color:#991B1B;">投诉处理</div>
+          <div class="fs-11" style="color:#991B1B;">对服务不满意？平台承诺24小时内响应<br>48小时内处理完毕</div>
+        </div>
+        <button class="btn-main btn-sm" style="background:linear-gradient(135deg,#DC2626,#EF4444);" onclick="showModal('complain')">立即投诉</button>
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+    <!-- ========== 10. 我的 ========== -->
+    <div class="page" id="page-profile">
+      <div class="profile-hero">
+        <div class="ph-bg"></div>
+        <div class="ph-bg2"></div>
+        <div class="topbar with-bg color" style="background:transparent;">
+          <div class="brand-name" style="color:#fff;font-size:17px;">我的</div>
+          <div class="topbar-actions">
+            <div class="icon-btn" style="background:rgba(255,255,255,.2);color:#fff;">⚙️</div>
+          </div>
+        </div>
+        <div style="height:14px;"></div>
+        <div class="profile-card">
+          <div class="pc-av">凤</div>
+          <div class="pc-info">
+            <div class="nm">王金凤 <span class="v">VIP3</span></div>
+            <div class="meta">
+              <span>75岁</span><span class="v">已实名</span><span class="v">失能二级</span>
+            </div>
+          </div>
+          <div style="text-align:right;color:#fff;font-size:11px;line-height:1.5;">
+            <div style="opacity:.85;">信用分</div>
+            <div style="font-size:18px;font-weight:800;">98<span style="font-size:10px;">分</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-data">
+        <div class="pd" onclick="goWallet()"><div class="v">¥1,500</div><div class="l">钱包余额</div></div>
+        <div class="pd" onclick="goWealth()"><div class="v">¥50K</div><div class="l">理财持仓</div></div>
+        <div class="pd" onclick="goEscrow()"><div class="v">¥30K</div><div class="l">预付托管</div></div>
+        <div class="pd"><div class="v">98</div><div class="l">信用分</div></div>
+      </div>
+
+      <!-- 实名状态 -->
+      <div style="margin:0 16px 12px;padding:12px;background:linear-gradient(90deg,#D1FAE5,#A7F3D0);border-radius:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#fff;color:var(--success);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;">✓</div>
+        <div style="flex:1;">
+          <div class="fs-13 fw-6">实名认证已完成</div>
+          <div class="fs-11 c3">身份证号: 320106********5025<br>民政认证 · 失能二级</div>
+        </div>
+        <div class="fs-11 c1">查看 ›</div>
+      </div>
+
+      <!-- 我的成就 -->
+      <div class="section" style="padding-top:8px;">
+        <div class="section-title"><h3>我的成就</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row" style="justify-content:space-around;">
+            <div class="text-c">
+              <div style="font-size:30px;">🏅</div>
+              <div class="fs-11 fw-7 mt-8">银龄大使</div>
+              <div class="fs-10 c3">完成首次点单</div>
+            </div>
+            <div class="text-c">
+              <div style="font-size:30px;">⭐</div>
+              <div class="fs-11 fw-7 mt-8">好评达人</div>
+              <div class="fs-10 c3">评价10次</div>
+            </div>
+            <div class="text-c">
+              <div style="font-size:30px;">🛡️</div>
+              <div class="fs-11 fw-7 mt-8">维权先锋</div>
+              <div class="fs-10 c3">退款成功</div>
+            </div>
+            <div class="text-c">
+              <div style="font-size:30px;">👑</div>
+              <div class="fs-11 fw-7 mt-8">高净值</div>
+              <div class="fs-10 c3">理财50万</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 功能菜单 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>常用功能</h3></div>
+        <div class="menu-list">
+          <div class="ml-item" onclick="goWallet()">
+            <div class="mli-ico">💳</div>
+            <div class="mli-text">数币钱包</div>
+            <div class="mli-meta">已激活</div>
+            <div class="mli-arrow">›</div>
+          </div>
+          <div class="ml-item" onclick="showModal('card')">
+            <div class="mli-ico">💎</div>
+            <div class="mli-text">硬钱包领取</div>
+            <div class="mli-meta" style="color:var(--danger);">可领取</div>
+            <div class="mli-arrow">›</div>
+          </div>
+          <div class="ml-item" onclick="goCoupons()">
+            <div class="mli-ico">🎁</div>
+            <div class="mli-text">消费券管理</div>
+            <div class="mli-meta">4张</div>
+            <div class="mli-arrow">›</div>
+          </div>
+          <div class="ml-item" onclick="goOrders()">
+            <div class="mli-ico">📋</div>
+            <div class="mli-text">订单管理</div>
+            <div class="mli-meta">3单进行中</div>
+            <div class="mli-arrow">›</div>
+          </div>
+          <div class="ml-item" onclick="goEscrow()">
+            <div class="mli-ico">🛡️</div>
+            <div class="mli-text">预付费管理</div>
+            <div class="mli-meta">2笔托管</div>
+            <div class="mli-arrow">›</div>
+          </div>
+          <div class="ml-item" onclick="goFamily()">
+            <div class="mli-ico">👨‍👩‍👧</div>
+            <div class="mli-text">亲情账户</div>
+            <div class="mli-meta">2位家属</div>
+            <div class="mli-arrow">›</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-list" style="margin-top:-8px;">
+        <div class="ml-item" onclick="goWealth()">
+          <div class="mli-ico">📈</div>
+          <div class="mli-text">理财管理</div>
+          <div class="mli-meta">4款产品</div>
+          <div class="mli-arrow">›</div>
+        </div>
+        <div class="ml-item" onclick="showModal('health')">
+          <div class="mli-ico">❤️</div>
+          <div class="mli-text">健康档案</div>
+          <div class="mli-meta">慢病3项</div>
+          <div class="mli-arrow">›</div>
+        </div>
+        <div class="ml-item" onclick="showModal('service')">
+          <div class="mli-ico">💬</div>
+          <div class="mli-text">客服中心</div>
+          <div class="mli-meta">7×24</div>
+          <div class="mli-arrow">›</div>
+        </div>
+        <div class="ml-item" onclick="toast('设置功能开发中')">
+          <div class="mli-ico">⚙️</div>
+          <div class="mli-text">设置</div>
+          <div class="mli-arrow">›</div>
+        </div>
+      </div>
+
+      <!-- 服务总览 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>我的养老一卡通</h3></div>
+        <div style="background:linear-gradient(135deg,#1E3A8A,#3B82F6);color:#fff;border-radius:14px;padding:18px;box-shadow:var(--shadow);">
+          <div class="row between">
+            <div>
+              <div class="fs-11" style="opacity:.85;">苏心养老一卡通</div>
+              <div style="font-size:18px;font-weight:800;margin-top:4px;">江苏 · 王金凤</div>
+            </div>
+            <div style="font-size:34px;">💳</div>
+          </div>
+          <div style="font-size:18px;font-weight:800;margin-top:16px;letter-spacing:2px;">3201 0600 **** 5025</div>
+          <div class="row between mt-12">
+            <div>
+              <div class="fs-10" style="opacity:.8;">发卡机构</div>
+              <div class="fs-12 fw-7 mt-4">工商银行</div>
+            </div>
+            <div>
+              <div class="fs-10" style="opacity:.8;">卡等级</div>
+              <div class="fs-12 fw-7 mt-4">钻石卡</div>
+            </div>
+            <div>
+              <div class="fs-10" style="opacity:.8;">年权益</div>
+              <div class="fs-12 fw-7 mt-4">¥1,200</div>
+            </div>
+          </div>
+        </div>
+        <div class="row gap-8 mt-12" style="flex-wrap:wrap;">
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">养老消费</span>
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">医疗就诊</span>
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">交通出行</span>
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">公园景区</span>
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">图书借阅</span>
+          <span style="padding:8px 14px;background:#fff;color:#111827;border-radius:18px;font-size:11px;box-shadow:var(--shadow);">补贴发放</span>
+        </div>
+      </div>
+
+      <!-- 服务商合作 -->
+      <div class="section" style="padding-top:0;">
+        <div class="section-title"><h3>常用服务商</h3></div>
+        <div class="bg-w" style="border-radius:14px;padding:14px;box-shadow:var(--shadow);">
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:34px;height:34px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;">🏥</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">南京鼓楼护理站</div>
+              <div class="fs-11 c3">最近合作: 2026-08-05</div>
+            </div>
+            <span style="font-size:10px;background:#FFF7ED;color:var(--primary);padding:2px 6px;border-radius:3px;font-weight:600;">常用</span>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:34px;height:34px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;">🏠</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">苏心家政中心</div>
+              <div class="fs-11 c3">最近合作: 2026-08-02</div>
+            </div>
+            <span style="font-size:10px;background:#FFF7ED;color:var(--primary);padding:2px 6px;border-radius:3px;font-weight:600;">常用</span>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;border-bottom:1px dashed var(--border);align-items:center;">
+            <div style="width:34px;height:34px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;">🍲</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">银发助餐中心</div>
+              <div class="fs-11 c3">最近合作: 2026-08-07</div>
+            </div>
+            <span style="font-size:10px;background:#FFF7ED;color:var(--primary);padding:2px 6px;border-radius:3px;font-weight:600;">常用</span>
+          </div>
+          <div class="row gap-12" style="padding:8px 0;align-items:center;">
+            <div style="width:34px;height:34px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;">💊</div>
+            <div style="flex:1;">
+              <div class="fs-13 fw-6">金康护理院</div>
+              <div class="fs-11 c3">最近合作: 2026-07-20</div>
+            </div>
+            <span style="font-size:10px;color:#9CA3AF;">已合作3次</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 退出登录 -->
+      <div style="margin:14px 16px;">
+        <button class="btn-ghost" style="width:100%;color:var(--danger);border-color:var(--danger);" onclick="toast('已退出登录')">退出登录</button>
+      </div>
+
+      <div style="margin:14px 16px;text-align:center;color:#9CA3AF;font-size:11px;padding:8px;line-height:1.6;">
+        苏心养老 V2.0 · 国金数联科技<br>
+        客服 400-7890588 · 江苏省民政厅指导<br>
+        江苏省级养老金融基础设施<br>
+        ICP 备案 苏 ICP-2024-08-XX
+      </div>
+      <div class="safe-bottom"></div>
+    </div>
+
+  </div>
+
+  <!-- 底部Tab栏 -->
+  <div class="tabbar">
+    <div class="tab active" data-page="home" onclick="goPage('home')"><div class="t-ico">🏠</div>首页</div>
+    <div class="tab" data-page="market" onclick="goPage('market')"><div class="t-ico">🛒</div>服务</div>
+    <div class="tab" data-page="orders" onclick="goPage('orders')"><div class="t-ico">📋</div>订单</div>
+    <div class="tab" data-page="coupons" onclick="goPage('coupons')"><div class="t-ico">🎁</div>券</div>
+    <div class="tab" data-page="profile" onclick="goPage('profile')"><div class="t-ico">👤</div>我的</div>
+  </div>
+</div>
+
+<!-- ============ 弹窗 ============ -->
+<!-- 充值弹窗 -->
+<div class="modal" id="modal-recharge">
+  <div class="sheet">
+    <div class="hd"><span class="t">充值</span><span class="x" onclick="closeModal('recharge')">×</span></div>
+    <div class="bd">
+      <div class="fs-13 c3 mb-12">充值金额 (单位:元)</div>
+      <div class="amount-grid">
+        <div class="amount-cell on">¥100</div>
+        <div class="amount-cell" onclick="selAmount(this)">¥500</div>
+        <div class="amount-cell" onclick="selAmount(this)">¥1000</div>
+        <div class="amount-cell" onclick="selAmount(this)">¥2000</div>
+        <div class="amount-cell" onclick="selAmount(this)">¥5000</div>
+        <div class="amount-cell" onclick="selAmount(this)">自定义</div>
+      </div>
+      <div class="fs-13 c3 mb-12">充值方式</div>
+      <div style="padding:12px;border:2px solid var(--primary);border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;background:#FFF7ED;">
+        <span>💰 数币钱包 充值</span>
+        <input type="radio" name="rt" checked>
+      </div>
+      <div style="padding:12px;border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+        <span>🏦 银行卡 充值 (建行 ****5896)</span>
+        <input type="radio" name="rt">
+      </div>
+      <button class="btn-main" style="width:100%;margin-top:14px;height:48px;font-size:15px;" onclick="closeModal('recharge');toast('充值成功！钱包已到账')">确认充值 ¥100</button>
+    </div>
+  </div>
+</div>
+
+<!-- 提现弹窗 -->
+<div class="modal" id="modal-withdraw">
+  <div class="sheet">
+    <div class="hd"><span class="t">提现</span><span class="x" onclick="closeModal('withdraw')">×</span></div>
+    <div class="bd">
+      <div class="fs-13 c3 mb-12">提现金额</div>
+      <input type="text" placeholder="请输入金额" style="width:100%;padding:14px;border:1.5px solid var(--border);border-radius:10px;font-size:16px;margin-bottom:14px;">
+      <div class="fs-13 c3 mb-12">可提现余额: <span class="c1">¥1,500.00</span></div>
+      <div class="fs-12 c3" style="margin-bottom:14px;padding:10px;background:#FEF3C7;border-radius:10px;">💡 数币钱包提现将自动到账至绑定的银行卡，2小时内到账，无任何手续费</div>
+      <button class="btn-main" style="width:100%;height:48px;font-size:15px;" onclick="closeModal('withdraw');toast('提现申请已提交，预计2小时内到账')">立即提现</button>
+    </div>
+  </div>
+</div>
+
+<!-- 风险测评 -->
+<div class="modal" id="modal-risk">
+  <div class="sheet risk-modal">
+    <div class="hd"><span class="t">风险承受能力测评</span><span class="x" onclick="closeModal('risk')">×</span></div>
+    <div class="bd risk-step" id="riskStep">
+      <div class="risk-progress">
+        <div class="rp done"></div><div class="rp done"></div><div class="rp"></div><div class="rp"></div><div class="rp"></div>
+      </div>
+      <div class="risk-q">3. 您计划的投资期限是？</div>
+      <div class="risk-opts">
+        <div class="ro" onclick="selectRisk(this)">A. 短期 (3个月以内)</div>
+        <div class="ro" onclick="selectRisk(this)">B. 中短期 (3-12个月)</div>
+        <div class="ro active" onclick="selectRisk(this)">C. 中长期 (1-3年)</div>
+        <div class="ro" onclick="selectRisk(this)">D. 长期 (3年以上)</div>
+      </div>
+      <div class="fs-12 c3" style="margin-top:14px;padding:10px;background:#FFF7ED;border-radius:8px;">📌 根据监管要求，所有客户购买理财产品前需完成风险测评</div>
+      <button class="btn-main" style="width:100%;margin-top:18px;height:48px;" onclick="closeModal('risk');toast('测评完成！您的风险等级为R2-稳健型')">下一题</button>
+    </div>
+  </div>
+</div>
+
+<!-- 服务详情 -->
+<div class="modal" id="modal-detail">
+  <div class="sheet">
+    <div class="hd"><span class="t">服务详情</span><span class="x" onclick="closeModal('detail')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:10px 0;">
+        <div style="font-size:48px;">🏥</div>
+        <div style="font-size:18px;font-weight:700;margin-top:8px;">南京鼓楼护理站</div>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">★ 4.9 · 1.2km · 签约数币 ✓</div>
+      </div>
+      <div style="padding:10px;background:#F9FAFB;border-radius:10px;margin:14px 0;">
+        <div class="fs-13 fw-7 mb-8">📋 机构资质</div>
+        <div class="fs-12 c3" style="line-height:1.8;">
+          ✓ 民政局认证养老服务机构<br>
+          ✓ 医疗机构执业许可证<br>
+          ✓ 食品经营许可证<br>
+          ✓ 智慧养老示范单位<br>
+          ✓ 5A级社会组织
+        </div>
+      </div>
+      <div style="padding:10px;background:#F9FAFB;border-radius:10px;margin:0 0 14px;">
+        <div class="fs-13 fw-7 mb-8">💬 用户评价(325)</div>
+        <div class="fs-12" style="line-height:1.6;">
+          <div style="padding:6px 0;border-bottom:1px dashed var(--border);">
+            <strong>张女士</strong> ★★★★★ <span class="c3">2026-08-05</span><br>
+            <span class="c3">服务非常专业，老人很满意</span>
+          </div>
+          <div style="padding:6px 0;border-bottom:1px dashed var(--border);">
+            <strong>刘先生</strong> ★★★★★ <span class="c3">2026-07-28</span><br>
+            <span class="c3">护理人员态度好，时间准时</span>
+          </div>
+          <div style="padding:6px 0;">
+            <strong>陈女士</strong> ★★★★★ <span class="c3">2026-07-22</span><br>
+            <span class="c3">平台监管到位，消费券可直接抵扣</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-main" style="width:100%;" onclick="closeModal('detail');showModal('order')">立即点单</button>
+    </div>
+  </div>
+</div>
+
+<!-- 点单流程 -->
+<div class="modal" id="modal-order">
+  <div class="sheet">
+    <div class="hd"><span class="t">确认订单</span><span class="x" onclick="closeModal('order')">×</span></div>
+    <div class="bd">
+      <div style="padding:12px;background:#FFF7ED;border-radius:12px;">
+        <div class="fs-13 fw-7">南京鼓楼护理站</div>
+        <div class="fs-11 c3" style="margin-top:4px;">★ 4.9 · 1.2km</div>
+      </div>
+      <div class="fs-13 c3 mt-12 mb-12">选择服务项目</div>
+      <div style="border:2px solid var(--primary);background:#FFF7ED;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div><div class="fw-7">老人助浴</div><div class="fs-11 c3">含洗发、剪指甲、按摩</div></div>
+        <div class="fw-7 c1">¥200</div>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div><div class="fw-7">专业护理(失能)</div><div class="fs-11 c3">翻身、喂食、康复辅助</div></div>
+        <div class="fw-7">¥150</div>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div><div class="fw-7">上门理发</div><div class="fs-11 c3">基础理发</div></div>
+        <div class="fw-7">¥50</div>
+      </div>
+      <div class="fs-13 c3 mt-16 mb-12">预约时间</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+        <div style="padding:8px 12px;border:1.5px solid var(--border);border-radius:16px;font-size:12px;">今天 14:00</div>
+        <div style="padding:8px 12px;border:2px solid var(--primary);background:#FFF7ED;border-radius:16px;font-size:12px;color:var(--primary);">今天 16:00</div>
+        <div style="padding:8px 12px;border:1.5px solid var(--border);border-radius:16px;font-size:12px;">明天 10:00</div>
+        <div style="padding:8px 12px;border:1.5px solid var(--border);border-radius:16px;font-size:12px;">明天 14:00</div>
+      </div>
+      <div class="rule-list mt-12">
+        <div class="rule-item"><span class="r-l">原价</span><span style="text-decoration:line-through;">¥200</span></div>
+        <div class="rule-item"><span class="r-l">消费券抵扣</span><span style="color:var(--success);">-¥150</span></div>
+        <div class="rule-item"><span class="r-l">实付</span><span style="color:var(--primary);font-weight:800;font-size:16px;">¥50</span></div>
+      </div>
+      <button class="btn-main" style="width:100%;margin-top:14px;height:48px;font-size:15px;" onclick="closeModal('order');toast('下单成功！数币钱包已扣款¥50')">确认下单 · 支付 ¥50</button>
+    </div>
+  </div>
+</div>
+
+<!-- 评价弹窗 -->
+<div class="modal" id="modal-evaluate">
+  <div class="sheet">
+    <div class="hd"><span class="t">服务评价</span><span class="x" onclick="closeModal('evaluate')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:14px 0;">
+        <div style="font-size:40px;">⭐</div>
+        <div style="font-size:14px;font-weight:700;margin-top:6px;">给本次服务打分</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:14px;font-size:32px;">⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="fs-13 c3 mb-12">评价内容</div>
+      <textarea placeholder="请说说您的感受..." style="width:100%;min-height:80px;padding:12px;border:1.5px solid var(--border);border-radius:10px;margin-bottom:14px;resize:none;"></textarea>
+      <div class="fs-13 c3 mb-12">标签</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+        <span style="padding:6px 12px;background:#FFF7ED;color:var(--primary);border:1px solid var(--primary);border-radius:16px;font-size:12px;">服务专业</span>
+        <span style="padding:6px 12px;background:#F3F4F6;color:#6B7280;border-radius:16px;font-size:12px;">态度热情</span>
+        <span style="padding:6px 12px;background:#F3F4F6;color:#6B7280;border-radius:16px;font-size:12px;">守时准点</span>
+        <span style="padding:6px 12px;background:#F3F4F6;color:#6B7280;border-radius:16px;font-size:12px;">干净整洁</span>
+      </div>
+      <button class="btn-main" style="width:100%;height:48px;" onclick="closeModal('evaluate');toast('评价成功，+10积分！')">提交评价</button>
+    </div>
+  </div>
+</div>
+
+<!-- 在聊客服 -->
+<div class="modal" id="modal-chat">
+  <div class="sheet">
+    <div class="hd"><span class="t">在线客服</span><span class="x" onclick="closeModal('chat')">×</span></div>
+    <div class="bd">
+      <div style="padding:10px;background:#F9FAFB;border-radius:10px;font-size:12px;color:#6B7280;text-align:center;margin-bottom:14px;">客服小苏为您服务 · 今日响应 286 次</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--primary-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;">苏</div>
+        <div style="background:#F3F4F6;border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.5;max-width:240px;">您好王奶奶，我是苏心养老客服小苏，请问有什么可以帮您？</div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-direction:row-reverse;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#DBEAFE;color:#2563EB;display:flex;align-items:center;justify-content:center;font-size:14px;">👤</div>
+        <div style="background:var(--primary-grad);color:#fff;border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.5;max-width:240px;">我的消费券为什么没到账？</div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:14px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--primary-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;">苏</div>
+        <div style="background:#F3F4F6;border-radius:14px;padding:10px 14px;font-size:13px;line-height:1.5;max-width:240px;">您上月的消费券已正常发放，可在"消费券中心"查看。如果有其他问题请告诉我~</div>
+      </div>
+      <input type="text" placeholder="输入消息..." style="width:100%;padding:12px;border:1.5px solid var(--border);border-radius:24px;font-size:14px;">
+    </div>
+  </div>
+</div>
+
+<!-- 视频客服 -->
+<div class="modal" id="modal-video">
+  <div class="sheet">
+    <div class="hd"><span class="t">视频客服</span><span class="x" onclick="closeModal('video')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:64px;">📹</div>
+        <div style="font-size:16px;font-weight:700;margin-top:12px;">正在为您接通专属客服</div>
+        <div class="fs-12 c3 mt-8">预计等待时间 30 秒 · 大字号、慢语速服务</div>
+      </div>
+      <div style="background:#F9FAFB;border-radius:12px;padding:14px;margin-bottom:14px;">
+        <div class="fs-13 fw-7 mb-12">视频客服专员</div>
+        <div class="fs-12 c3" style="line-height:1.8;">
+          客服编号: SU001 · 江苏南京<br>
+          服务评分: ★★★★★ 4.98<br>
+          服务老人: 1.2万人<br>
+          服务语言: 普通话/南京话/苏州话
+        </div>
+      </div>
+      <button class="btn-main" style="width:100%;height:48px;font-size:15px;" onclick="closeModal('video');toast('视频通话已连接')">开始视频通话</button>
+    </div>
+  </div>
+</div>
+
+<!-- 电话客服 -->
+<div class="modal" id="modal-phone">
+  <div class="sheet">
+    <div class="hd"><span class="t">电话客服</span><span class="x" onclick="closeModal('phone')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:64px;color:var(--success);">📞</div>
+        <div style="font-size:24px;font-weight:800;margin-top:12px;color:var(--primary);">400-7890588</div>
+        <div class="fs-13 fw-7 mt-8">苏心养老客服</div>
+        <div class="fs-12 c3 mt-8">7×24小时 · 免长途费<br>老人专线: 转 9</div>
+      </div>
+      <a href="tel:4007890588" style="text-decoration:none;">
+        <button class="btn-main" style="width:100%;height:48px;font-size:15px;">立即拨打</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- 硬钱包领取 -->
+<div class="modal" id="modal-card">
+  <div class="sheet">
+    <div class="hd"><span class="t">硬钱包领取</span><span class="x" onclick="closeModal('card')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:14px 0;">
+        <div style="font-size:64px;">💳</div>
+        <div style="font-size:16px;font-weight:700;margin-top:10px;">数币硬钱包</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#1E3A8A,#3B82F6);color:#fff;border-radius:14px;padding:16px;margin-bottom:14px;">
+        <div class="row between">
+          <div class="fs-11" style="opacity:.85;">苏心养老·江苏</div>
+          <div style="font-size:10px;background:rgba(255,255,255,.2);padding:2px 6px;border-radius:4px;">VISA版</div>
+        </div>
+        <div style="font-size:18px;font-weight:800;margin-top:14px;letter-spacing:2px;">**** **** **** 5025</div>
+        <div class="row between mt-12">
+          <div>
+            <div class="fs-10" style="opacity:.8;">持卡人</div>
+            <div class="fs-12 fw-7" style="margin-top:2px;">王金凤</div>
+          </div>
+          <div>
+            <div class="fs-10" style="opacity:.8;">有效期</div>
+            <div class="fs-12 fw-7" style="margin-top:2px;">12/32</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#FEF3C7;padding:12px;border-radius:10px;font-size:12px;color:#92400E;margin-bottom:14px;">
+        🎁 领取硬钱包即送 ¥50 数币红包 + 优先享受数币服务
+      </div>
+      <button class="btn-main" style="width:100%;height:48px;" onclick="closeModal('card');toast('申请已提交，预计5个工作日寄达')">立即申领</button>
+    </div>
+  </div>
+</div>
+
+<!-- 健康档案 -->
+<div class="modal" id="modal-health">
+  <div class="sheet">
+    <div class="hd"><span class="t">健康档案</span><span class="x" onclick="closeModal('health')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:8px 0;">
+        <div class="avatar lg" style="margin:0 auto;">凤</div>
+        <div style="font-size:16px;font-weight:700;margin-top:8px;">王金凤 · 75岁</div>
+        <div class="fs-11 c3">血型A · BMI 22.5</div>
+      </div>
+      <div style="margin-top:14px;background:#FEE2E2;padding:12px;border-radius:10px;">
+        <div class="fs-13 fw-7" style="color:#991B1B;">⚠️ 慢病管理 (3项)</div>
+        <div class="rule-list" style="margin-top:8px;">
+          <div class="rule-item"><span class="r-l">高血压(II级)</span><span>2020年起</span></div>
+          <div class="rule-item"><span class="r-l">2型糖尿病</span><span>2018年起</span></div>
+          <div class="rule-item"><span class="r-l">骨质疏松</span><span>2023年起</span></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="fs-13 fw-7 mb-12">💊 用药记录</div>
+        <div class="rule-list">
+          <div class="rule-item"><span class="r-l">苯磺酸氨氯地平</span><span>1次/日</span></div>
+          <div class="rule-item"><span class="r-l">二甲双胍</span><span>2次/日</span></div>
+          <div class="rule-item"><span class="r-l">钙片+D3</span><span>1次/日</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 投诉弹窗 -->
+<div class="modal" id="modal-complain">
+  <div class="sheet">
+    <div class="hd"><span class="t">发起投诉</span><span class="x" onclick="closeModal('complain')">×</span></div>
+    <div class="bd">
+      <div class="fs-13 c3 mb-12">投诉类型</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+        <span style="padding:8px 14px;background:var(--primary-grad);color:#fff;border-radius:18px;font-size:12px;">服务质量</span>
+        <span style="padding:8px 14px;background:#F3F4F6;color:#4B5563;border-radius:18px;font-size:12px;">虚假宣传</span>
+        <span style="padding:8px 14px;background:#F3F4F6;color:#4B5563;border-radius:18px;font-size:12px;">费用纠纷</span>
+        <span style="padding:8px 14px;background:#F3F4F6;color:#4B5563;border-radius:18px;font-size:12px;">服务态度</span>
+      </div>
+      <div class="fs-13 c3 mb-12">投诉内容</div>
+      <textarea placeholder="请详细说明..." style="width:100%;min-height:80px;padding:12px;border:1.5px solid var(--border);border-radius:10px;margin-bottom:14px;resize:none;"></textarea>
+      <button class="btn-main" style="width:100%;height:48px;" onclick="closeModal('complain');toast('投诉已提交，平台将24小时内响应')">提交投诉</button>
+    </div>
+  </div>
+</div>
+
+<!-- 服务证据弹窗 -->
+<div class="modal" id="modal-evidence">
+  <div class="sheet">
+    <div class="hd"><span class="t">服务证据 (全程留痕)</span><span class="x" onclick="closeModal('evidence')">×</span></div>
+    <div class="bd">
+      <div style="background:linear-gradient(135deg,#FFF7ED,#FED7AA);padding:12px;border-radius:10px;text-align:center;margin-bottom:14px;">
+        <div class="fs-13 fw-7">订单号: DD202608-0092</div>
+        <div class="fs-11 c3 mt-4">南京鼓楼护理站 · 专业护理</div>
+      </div>
+      
+      <div class="timeline">
+        <div class="ti">
+          <div class="dot" style="background:var(--success);"></div>
+          <div class="txt">
+            <strong>13:50 服务人员到达</strong><br>
+            <span class="c3">GPS: 南京市鼓楼区XX路128号</span>
+          </div>
+        </div>
+        <div class="ti">
+          <div class="dot" style="background:var(--success);"></div>
+          <div class="txt">
+            <strong>14:00 服务开始</strong><br>
+            <span class="c3">家属(女儿张女士) 电子签收确认</span>
+          </div>
+        </div>
+        <div class="ti">
+          <div class="dot" style="background:#F59E0B;"></div>
+          <div class="txt">
+            <strong>15:00 服务进行中</strong><br>
+            <span class="c3">全称录音录制中 · 实时定位同步</span>
+          </div>
+        </div>
+        <div class="ti">
+          <div class="dot" style="background:#9CA3AF;"></div>
+          <div class="txt">
+            <strong>预计 16:00 服务完成</strong><br>
+            <span class="c3">将自动发起结算确认</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-w" style="border-radius:10px;padding:14px;margin-top:14px;">
+        <div class="fs-13 fw-7 mb-12">📋 证据清单</div>
+        <div class="rule-list">
+          <div class="rule-item"><span class="r-l">📍 GPS 实时轨迹</span><span style="color:var(--success);">3 条</span></div>
+          <div class="rule-item"><span class="r-l">🎤 服务录音</span><span>录制中</span></div>
+          <div class="rule-item"><span class="r-l">📷 到场拍照</span><span style="color:var(--success);">2 张</span></div>
+          <div class="rule-item"><span class="r-l">✍️ 家属电子签名</span><span style="color:var(--success);">已签</span></div>
+          <div class="rule-item"><span class="r-l">⛓️ 区块链存证</span><span style="color:var(--success);">已上链</span></div>
+        </div>
+      </div>
+
+      <button class="btn-main" style="width:100%;margin-top:14px;" onclick="closeModal('evidence');toast('证据已下载')">下载完整证据</button>
+    </div>
+  </div>
+</div>
+
+<!-- 长期护理险弹窗 -->
+<div class="modal" id="modal-care-ins">
+  <div class="sheet">
+    <div class="hd"><span class="t">长期护理保险</span><span class="x" onclick="closeModal('care-ins')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:14px 0;">
+        <div style="font-size:48px;background:linear-gradient(135deg,#FED7AA,#FEF3C7);width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;">🛡️</div>
+        <div style="font-size:18px;font-weight:800;margin-top:14px;">长期护理保险</div>
+        <div class="fs-12 c3 mt-8">苏心养老平台 · 失能老人专属</div>
+      </div>
+      <div class="bg-w" style="background:#FFF7ED;padding:14px;border-radius:12px;margin-bottom:14px;">
+        <div class="row between">
+          <div>
+            <div class="fs-11 c3">保单状态</div>
+            <div class="fw-7 fs-15 c1 mt-4">已生效</div>
+          </div>
+          <div>
+            <div class="fs-11 c3">月领金额</div>
+            <div class="fw-7 fs-15 c1 mt-4">¥800</div>
+          </div>
+          <div>
+            <div class="fs-11 c3">服务次数</div>
+            <div class="fw-7 fs-15 mt-4">8次/月</div>
+          </div>
+        </div>
+      </div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="r-l">保单编号</span><span>LCI2026-08-1234</span></div>
+        <div class="rule-item"><span class="r-l">投保人</span><span>王金凤</span></div>
+        <div class="rule-item"><span class="r-l">失能等级</span><span>II级</span></div>
+        <div class="rule-item"><span class="r-l">生效日期</span><span>2026-06-01</span></div>
+        <div class="rule-item"><span class="r-l">本月已用</span><span>5次 / 8次</span></div>
+      </div>
+      <button class="btn-main" style="width:100%;margin-top:14px;" onclick="closeModal('care-ins');toast('查看明细')">查看服务明细</button>
+    </div>
+  </div>
+</div>
+
+<!-- 权益中心 -->
+<div class="modal" id="modal-benefits">
+  <div class="sheet">
+    <div class="hd"><span class="t">我的权益 (VIP3)</span><span class="x" onclick="closeModal('benefits')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:10px 0;">
+        <div style="font-size:48px;">👑</div>
+        <div style="font-size:18px;font-weight:800;margin-top:10px;color:var(--gold);">钻石 VIP3 会员</div>
+        <div class="fs-12 c3 mt-8">升级至 VIP4 还差 ¥30,000 累计消费</div>
+      </div>
+      <div class="bg-w" style="background:linear-gradient(135deg,#FEF3C7,#FED7AA);padding:14px;border-radius:12px;margin:14px 0;">
+        <div class="fs-13 fw-7">本月权益使用</div>
+        <div class="score-bar mt-12"><span>免费上门</span><div class="bar"><div class="fill" style="width:30%;"></div></div><span>3/10</span></div>
+        <div class="score-bar mt-8"><span>免费体检</span><div class="bar"><div class="fill" style="width:100%;"></div></div><span>1/1</span></div>
+        <div class="score-bar mt-8"><span>专家咨询</span><div class="bar"><div class="fill" style="width:50%;"></div></div><span>2/4</span></div>
+      </div>
+      <div class="fs-13 fw-7 mb-12">🎁 可领权益</div>
+      <div style="border:2px dashed #FED7AA;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;">
+        <div><div class="fw-7">免费上门理发 x 1</div><div class="fs-11 c3">有效期至: 2026-08-31</div></div>
+        <button style="background:#FED7AA;color:var(--primary);padding:6px 12px;border-radius:14px;font-size:11px;font-weight:600;">领取</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 产品详情 -->
+<div class="modal" id="modal-detail-prod">
+  <div class="sheet">
+    <div class="hd"><span class="t">产品详情</span><span class="x" onclick="closeModal('detail-prod')">×</span></div>
+    <div class="bd">
+      <div style="text-align:center;padding:10px 0;">
+        <div style="font-size:18px;font-weight:700;">苏心稳健1号</div>
+        <div class="fs-12 c3 mt-8">理财产品编号: JC2026-W01</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#FFF7ED,#FED7AA);padding:16px;border-radius:12px;margin-bottom:14px;">
+        <div class="fs-11 c3">业绩比较基准(年化)</div>
+        <div style="font-size:32px;font-weight:800;color:var(--primary);margin:4px 0;">2.8%</div>
+        <div class="fs-11 c3">成立以来年化 2.92% · 5年期</div>
+      </div>
+      <div class="fs-13 fw-7 mb-12">📋 产品要素</div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="r-l">产品类型</span><span>固定收益类</span></div>
+        <div class="rule-item"><span class="r-l">风险等级</span><span>R2 稳健型</span></div>
+        <div class="rule-item"><span class="r-l">理财期限</span><span>30天</span></div>
+        <div class="rule-item"><span class="r-l">起购金额</span><span>¥1,000</span></div>
+        <div class="rule-item"><span class="r-l">发行机构</span><span>苏心养老 × 工商银行</span></div>
+        <div class="rule-item"><span class="r-l">资金投向</span><span>国债+信用债+银行存款</span></div>
+      </div>
+      <div style="background:#FEF3C7;padding:12px;border-radius:10px;font-size:11px;color:#92400E;margin-top:14px;">
+        ⚠️ 理财有风险，投资需谨慎。过往业绩不代表未来表现。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ 数据 ============
+const state={page:'home',walletTab:0};
+
+// ============ 路由 ============
+function goPage(id){
+  state.page=id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target=document.getElementById('page-'+id);
+  if(target)target.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.toggle('active',t.dataset.page===id);
+  });
+  document.getElementById('pages').scrollTop=0;
+}
+
+function goCoupons(){goPage('coupons');}
+function goWallet(){goPage('wallet');}
+function goWealth(){goPage('wealth');}
+function goMarket(){goPage('market');}
+function goOrders(){goPage('orders');}
+function goEscrow(){goPage('escrow');}
+function goFamily(){goPage('family');}
+function goService(){goPage('service');}
+function goProfile(){goPage('profile');}
+
+// ============ Tab切换 ============
+function switchWallet(i){
+  document.querySelectorAll('#page-wallet .wallet-tabs .wt').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.wallet-panel').forEach((p,j)=>p.style.display=j===i?'block':'none');
+}
+function switchMarket(i){
+  document.querySelectorAll('#page-market .market-tabs .mt').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.market-panel').forEach((p,j)=>p.style.display=j===i?'block':'none');
+}
+function switchWealthTab(i){
+  document.querySelectorAll('#page-wealth .wealth-tabs .wt').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('#page-wealth .wealth-panel').forEach((p,j)=>p.style.display=j===i?'block':'none');
+}
+function switchCouponTab(i){
+  document.querySelectorAll('.coupon-tabs .ct').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.coupon-panel').forEach((p,j)=>p.style.display=j===i?'block':'none');
+}
+function switchOrderTab(i){
+  document.querySelectorAll('.order-tabs .ot').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.order-panel').forEach((p,j)=>p.style.display=j===i?'block':'none');
+}
+function switchFamilyTab(i){
+  document.querySelectorAll('.family-tabs .ft').forEach((t,j)=>t.classList.toggle('active',j===i));
+  toast('已切换亲属类型');
+}
+function switchFaq(el,name){
+  document.querySelectorAll('.faq-cat .fc').forEach(f=>f.classList.remove('on'));
+  el.classList.add('on');
+  toast('已切换：'+name);
+}
+
+// ============ 弹窗 ============
+function showModal(id){document.getElementById('modal-'+id).classList.add('active');}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('active');}
+function selectRisk(el){
+  el.parentNode.querySelectorAll('.ro').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+}
+function selAmount(el){
+  document.querySelectorAll('.amount-cell').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// ============ Toast ============
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+// ============ 时钟 ============
+function tick(){
+  const d=new Date();
+  document.getElementById('clock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+
+// ============ 公告滚动 ============
+const notices=['📢 2026年8月苏心养老失能老人消费券已开放领取','🎉 苏心稳健1号理财8月8日上线，年化2.8%','🏥 全省新增38家签约养老服务机构','💰 数币硬钱包线上申领功能即将上线','📊 苏心养老平台累计服务突破350万人次','🤝 苏州姑苏综合体入选全国示范综合体'];
+let noticeIdx=0;
+function rollNotice(){
+  const el=document.getElementById('noticeText');
+  if(el){el.textContent=notices[noticeIdx%notices.length];noticeIdx++;}
+}
+
+// ============ 初始化 ============
+window.addEventListener('DOMContentLoaded',()=>{
+  tick();setInterval(tick,30000);
+  rollNotice();setInterval(rollNotice,4000);
+  console.log('Suxin Elderly ready');
+});
+</script>
+</body>
+</html>
